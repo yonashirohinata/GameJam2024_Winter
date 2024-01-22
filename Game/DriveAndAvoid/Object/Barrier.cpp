@@ -22,7 +22,7 @@ Barrier::~Barrier()
 //•`‰æˆ—
 void Barrier::Draw(const Vector2D& location)
 {
-	DrawRoteGraphF(location.x, location.y, 1.0, 0.0, image, TRUE);
+	DrawRotaGraphF(location.x, location.y, 1.0, 0.0, image, TRUE);
 }
 
 //õ–½‚ªs‚«‚½‚©H
