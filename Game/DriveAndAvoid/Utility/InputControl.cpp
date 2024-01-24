@@ -77,7 +77,7 @@ bool InputControl::GetButtonDown(int button)
 }
 
 //ƒ{ƒ^ƒ“æ“¾F—£‚µ‚½uŠÔ
-bool InputControl::GetbutonUp(int button)
+bool InputControl::GetButtonUp(int button)
 {
 	return CheckButtonRange(button) && (!now_button[button] && old_button[button]);
 }
