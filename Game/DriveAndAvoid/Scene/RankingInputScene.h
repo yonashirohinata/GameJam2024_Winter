@@ -6,13 +6,13 @@
 class RankingInputScene : public SceneBase
 {
 private:
-	int backguround_image;		//背景画像
+	int background_image;		//背景画像
 	RankingData* ranking;		//ランキング情報
 	int score;					//スコア
 	char name[15];				//名前
 	int name_num;				//名前入力数
 	int cursor_x;				//カーソルX座標
-	int cursour_y;				//カーソルY座標
+	int cursor_y;				//カーソルY座標
 
 public:
 	RankingInputScene();
