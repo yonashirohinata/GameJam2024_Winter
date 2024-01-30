@@ -12,7 +12,7 @@ private:
 	int barrier_image;		//バリア画像
 	int mileage;			//走行距離
 	int enemy_image[3];		//敵画像
-	int enemy_const[3];		//と売りすぎた敵カウント
+	int enemy_count[3];		//と売りすぎた敵カウント
 	Player* player;			//プレイヤー
 	Enemy* enemy;			//敵
 

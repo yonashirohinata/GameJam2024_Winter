@@ -94,3 +94,84 @@ void SceneManager::Update()
 	}
 }
 
+//
+void SceneManager::Finalize()
+{
+	//
+	if (current_scene != nullptr)
+	{
+		current_scene->Finalize();
+		delete current_scene;
+		current_scene = nullptr;
+	}
+
+	//
+	DxLib_End();
+}
+
+//
+void SceneManager::Draw() const
+{
+	//
+	ClearDrawScreen();
+
+	//
+	current_scene->Draw();
+
+	//
+	ScreenFlip();
+}
+
+//
+void SceneManager::ChangeScene(eSceneType scene_type)
+{
+	//
+	SceneBase* new_scene = dynamic_cast<SceneBase*>(CreateScene(scene_type));
+
+	//
+	if (new_scene == nullptr)
+	{
+		throw("ƒV[ƒ“‚ª¶¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B\n");
+	}
+
+	//
+	if (current_scene != nullptr)
+	{
+		current_scene->Finalize();
+		delete current_scene;
+	}
+
+	//
+	new_scene->Initialize();
+
+	//
+	current_scene = new_scene;
+}
+
+//
+SceneBase* SceneManager::CreateScene(eSceneType scene_type)
+{
+	//
+	switch (scene_type)
+	{
+	case eSceneType::E_TITLE:
+		return new TitleScene;
+
+	case eSceneType::E_MAIN:
+		return new GameMainScene;
+
+	case eSceneType::E_RESULT:
+		return new ResultScene;
+
+	case eSceneType::E_HELP:
+		return new HelpScene;
+
+	case eSceneType::E_RANKING_DISP:
+		return new RankingDispScene;
+
+	case eSceneType::E_RANKING_INPUT:
+		return new RankingInputScene;
+	default:
+		return nullptr;
+	}
+}
