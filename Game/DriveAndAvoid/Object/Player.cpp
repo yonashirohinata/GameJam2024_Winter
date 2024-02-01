@@ -142,7 +142,7 @@ float Player::GetSpeed() const
 }
 
 //îRóøéÊìæèàóù
-float Player::GetSpeed() const
+float Player::GetFuel() const
 {
 	return this->fuel;
 }
@@ -174,13 +174,13 @@ void Player::Movement()
 	//è\éöà⁄ìÆèàóù
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_LEFT))
 	{
-		move += Vector2D(1.0f, 0.0f);
-		angle = DX_PI_F / 18;
+		move += Vector2D(-1.0f, 0.0f);
+		angle = -DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_RIGHT))
 	{
-		move += Vector2D(-1.0f, 0.0f);
+		move += Vector2D(1.0f, 0.0f);
 		angle = DX_PI_F / 18;
 	}
 
