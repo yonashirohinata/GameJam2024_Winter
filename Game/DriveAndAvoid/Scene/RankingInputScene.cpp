@@ -21,7 +21,7 @@ void RankingInputScene::Initialize()
 	//エラーチェック
 	if (background_image == -1)
 	{
-		throw("Resouce/images/Ranking.bmpがありません\n");
+		throw("Resource/images/Ranking.bmpがありません\n");
 	}
 
 	//メモリの動的確保
@@ -31,7 +31,7 @@ void RankingInputScene::Initialize()
 	//リザルトデータを取得する
 	FILE* fp = nullptr;
 	//ファイルオープン
-	errno_t result = fopen_s(&fp, "Resource/dat//result_data.csv","r");
+	errno_t result = fopen_s(&fp, "Resource/dat/result_data.csv","r");
 
 	//エラーチェック
 	if (result != 0)
@@ -105,7 +105,7 @@ void RankingInputScene::Draw() const
 		}
 		else
 		{
-			DrawBox(0, 0, font_size, font_size, GetColor(255, 255, 255), FALSE);
+			DrawBox(85, 400, 85 + font_size * 2, 400 + font_size, GetColor(255, 255, 255), FALSE);
 		}
 	}
 }
@@ -169,7 +169,7 @@ bool RankingInputScene::InputName()
 			cursor_y++;
 			if (cursor_y == 4)
 			{
-				cursor_y = 0;
+				cursor_x = 0;
 			}
 		}
 	}
@@ -188,7 +188,7 @@ bool RankingInputScene::InputName()
 		}
 		else if (cursor_y < 4)
 		{
-			name[name_num++] = 'a' + cursor_x + (cursor_y * 13);
+			name[name_num++] = 'A' + cursor_x + ((cursor_y - 2) * 13);
 			if (name_num == 14)
 			{
 				cursor_x = 0;
@@ -201,6 +201,11 @@ bool RankingInputScene::InputName()
 			{
 				name[name_num] = '\0';
 				return true;
+			}
+			else
+			{
+				name_num--;
+				name[name_num] = NULL;
 			}
 		}
 	}

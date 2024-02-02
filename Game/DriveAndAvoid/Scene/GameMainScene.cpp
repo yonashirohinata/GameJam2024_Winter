@@ -140,7 +140,7 @@ void GameMainScene::Draw() const
 	SetFontSize(16);
 	DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
 	DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
-	DrawFormatString(510, 20, GetColor(0, 0, 0), "避けた数");
+	DrawFormatString(510, 80, GetColor(0, 0, 0), "避けた数");
 	for (int i = 0; i < 3; i++)
 	{
 		DrawRotaGraph(523 + (i * 50), 120, 0.3, 0, enemy_image[i], TRUE, FALSE);
@@ -154,14 +154,14 @@ void GameMainScene::Draw() const
 	//バリア枚数の描画
 	for (int i = 0; i < player->GetBarrierCount(); i++)
 	{
-		DrawRotaGraph(520 + i * 25, 340, 0.02f, 0, barrier_image, TRUE, FALSE);
+		DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
 	}
 
 	//燃料ゲージの描画
 	float fx = 510.0f;
 	float fy = 390.0f;
 	DrawFormatStringF(fx, fy, GetColor(0, 0, 0), "FUEL METER");
-	DrawBoxAA(fx, fy, + 20.0f, fx + (player->GetFuel() * 100 / 20000), fy + 40.0f, GetColor(0, 102, 204), TRUE);
+	DrawBoxAA(fx, fy + 20.0f, fx + (player->GetFuel() * 100 / 20000), fy + 40.0f, GetColor(0, 102, 204), TRUE);
 	DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
 
 	//体力ゲージの描画
@@ -190,7 +190,7 @@ void GameMainScene::Finalize()
 	//エラーチェック
 	if (result != 0)
 	{
-		throw("Resorce/daat/result_data.csvが開けません\n");
+		throw("Resource/dat/result_data.csvが開けません\n");
 	}
 
 	//スコアを保存

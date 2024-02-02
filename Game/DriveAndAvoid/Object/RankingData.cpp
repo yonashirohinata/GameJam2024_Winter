@@ -65,7 +65,7 @@ void RankingData::SetRankingData(int score, const char* name)
 	SortData();
 }
 
-//
+//ƒXƒRƒAæ“¾ˆ—
 int RankingData::GetScore(int value) const
 {
 	return score[value];

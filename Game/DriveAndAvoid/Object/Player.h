@@ -32,8 +32,8 @@ public:
 	Vector2D GetLocation() const;		//位置座標取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさ取得
 	float GetSpeed() const;				//速さ取得処理
-	float GetFuel()  const;				//燃料取得
-	float GetHp()  const;				//体力取得
+	float GetFuel() const;				//燃料取得
+	float GetHp() const;				//体力取得
 	int GetBarrierCount()  const;		//バリアの枚数取得
 	bool IsBarrier()  const;			//バリア有効か？を取得
 
