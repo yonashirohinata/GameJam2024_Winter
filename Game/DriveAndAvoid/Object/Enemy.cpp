@@ -71,21 +71,18 @@ void Enemy::Movement()
 	
 
 	//十字移動処理
-	if (InputControl::GetButton2(XINPUT_BUTTON_DPAD_LEFT))
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_LEFT))
 	{
-		time++;
-		if (time > 5) {
 			move += Vector2D(-100.0f, 0.0f);
 			cursor--;
 			time = 0; // 待機時間リセット
-		}
 	}
 	else 
 	{
-			time = 0;
+			time++;
 	}
 
-	if (InputControl::GetButton2(XINPUT_BUTTON_DPAD_RIGHT))
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_RIGHT))
 	{
 		cursor++;
 		move += Vector2D(100.0f, 0.0f);
