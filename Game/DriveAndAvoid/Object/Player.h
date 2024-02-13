@@ -36,8 +36,10 @@ public:
 	float GetHp() const;				//体力取得
 	int GetBarrierCount()  const;		//バリアの枚数取得
 	bool IsBarrier()  const;			//バリア有効か？を取得
-
+	bool IsVanish()const;				//透明化が有効か？を取得
+	
 private:
 	void Movement();			//移動処理
 	void Acceleration();		//加速処理
+	void Vanishment();			//透明化処理
 };
