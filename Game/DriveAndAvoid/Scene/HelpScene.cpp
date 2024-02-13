@@ -44,15 +44,20 @@ void HelpScene::Draw() const
 	DrawGraph(0, 0, background_image, FALSE);
 
 	//ゲーム説明
+	SetFontSize(32);
+	DrawString(20, 120, "ヘルプ画面", 0xffff00, 0);
+
 	SetFontSize(16);
-	DrawString(20, 120, "ヘルプ画面", 0xffffff, 0);
+	DrawString(20, 160, "これは妨害側とプレイヤー側に", 0xffffff, 0);
+	DrawString(20, 180, "分かれて戦う対戦型ゲームです。", 0xffffff, 0);
+	DrawString(20, 220, "妨害側は各ボタンに設定された", 0xffffff, 0);
+	DrawString(20, 240, "妨害手段でプレイヤーを妨害し", 0xffffff, 0);
+	DrawString(20, 260, "プレイヤーのHPを0にすることで勝利。", 0xffffff, 0);
+	DrawString(20, 300, "プレイヤー側はHPが0になるまでに", 0xffffff, 0);
+	DrawString(20, 320, "一定数以上のスコアを獲得することで勝利,", 0xffffff, 0);
 
-	DrawString(20, 160, "これは障害物を避けながら", 0xffffff, 0);
-	DrawString(20, 180, "走りきるゲームです", 0xffffff, 0);
-	DrawString(20, 200, "燃料が尽きるか障害物に", 0xffffff, 0);
-	DrawString(20, 220, "数回当たるとゲームオーバーです。", 0xffffff, 0);
-
-	DrawString(20, 450, "----	Bボタンで押してタイトルへ戻る	----", 0xffffff, 0);
+	DrawBoxAA(10, 445, 370, 470, 0x00ff00, TRUE);
+	DrawString(20, 450, "----	Bボタンを押してタイトルへ戻る	----", 0xff0000, 0);
 }
 
 //終了時処理
