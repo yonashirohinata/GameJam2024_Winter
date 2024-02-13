@@ -1,20 +1,22 @@
 #pragma once
 
 #include "../Utility/Vector2D.h"
-
-class Enemy
+class Item
 {
 private:
-	int type;				//タイプ
-	int image;				//画像
-	float speed;			//速さ
+	//int type;				//タイプ
+	//int image;				//画像
+	//float speed;			//速さ
 	Vector2D location;		//位置情報
-	Vector2D box_size;		//当たり判定の大きさ
-	int cursor;				//カーソルの選択
-	int time;				//待機時間
+	//Vector2D box_size;		//当たり判定の大きさ
+
+	int car_engine;
+	int oil_tank;
+	int tool_box;
+
 public:
-	Enemy(int type, int handle);
-	~Enemy();
+	Item(int handle);
+	~Item();
 
 	void Initialize();				//初期化処理
 	void Update(float speed);		//更新処理
@@ -24,8 +26,4 @@ public:
 	int GetType() const;				//タイプの取得
 	Vector2D GetLocation() const;		//位置情報の取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさを取得
-
-private:
-	void Movement();			//移動処理
-
 };
