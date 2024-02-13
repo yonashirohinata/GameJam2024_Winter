@@ -10,7 +10,8 @@ private:
 	float speed;			//速さ
 	Vector2D location;		//位置情報
 	Vector2D box_size;		//当たり判定の大きさ
-	int cursor;  // カーソルの選択
+	int cursor;				//カーソルの選択
+	int time;				//待機時間
 public:
 	Enemy(int type, int handle);
 	~Enemy();
