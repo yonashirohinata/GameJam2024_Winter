@@ -58,7 +58,7 @@ void Player::Update()
 	//â¡å∏ë¨èàóù
 	Acceleration();
 
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_START))
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_START)&& DX_INPUT_PAD1)
 	{
 		is_active = false;
 	}
