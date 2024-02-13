@@ -9,6 +9,7 @@ GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image
 	{
 		enemy_image[i] = NULL;
 		enemy_count[i] = NULL;
+		item_image[i] = NULL;
 	}
 }
 
@@ -27,6 +28,7 @@ void GameMainScene::Initialize()
 	back_ground = LoadGraph("Resource/images/back.bmp");
 	barrier_image = LoadGraph("Resource/images/barrier.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
+
 
 	//エラーチェック
 	if (back_ground == -1)
@@ -138,18 +140,25 @@ void GameMainScene::Draw() const
 	//UIの描画
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
 	SetFontSize(16);
-	DrawFormatString(510, 20, GetColor(0, 0, 0), "ハイスコア");
-	DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", high_score);
-	DrawFormatString(510, 80, GetColor(0, 0, 0), "避けた数");
+	DrawFormatString(510, 20, GetColor(0, 0, 0), "妨害がHITした数");
+	//DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", 妨害した数の変数);
+	DrawFormatString(510, 80, GetColor(0, 0, 0), "獲得した\nアイテムの数");
 	for (int i = 0; i < 3; i++)
 	{
-		DrawRotaGraph(523 + (i * 50), 120, 0.3, 0, enemy_image[i], TRUE, FALSE);
-		DrawFormatString(510 + (i * 50), 140, GetColor(255, 255, 255), "%03d", enemy_count[i]);
+		DrawRotaGraph(523 + (i * 50), 140, 0.3, 0, enemy_image[i], TRUE, FALSE);
+		DrawFormatString(510 + (i * 50), 160, GetColor(255, 255, 255), "%03d", enemy_count[i]);
 	}
-	DrawFormatString(510, 200, GetColor(0, 0, 0), "走行距離");
-	DrawFormatString(555, 220, GetColor(255, 255, 255), "%08d", mileage / 10);
-	DrawFormatString(510, 240, GetColor(0, 0, 0), "スピード");
-	DrawFormatString(555, 260, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
+	//DrawRotaGraph(523, 140, 0.3, 0, 燃料イメージ, TRUE, FALSE);
+	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[1]);
+	//DrawRotaGraph(573, 140, 0.3, 0, 加速イメージ, TRUE, FALSE);
+	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[2]);
+	//DrawRotaGraph(623, 140, 0.3, 0, HPイメージ, TRUE, FALSE);
+	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[3]);
+
+	DrawFormatString(510, 220, GetColor(0, 0, 0), "走行距離");
+	DrawFormatString(555, 240, GetColor(255, 255, 255), "%08d", mileage / 10);
+	DrawFormatString(510, 260, GetColor(0, 0, 0), "スピード");
+	DrawFormatString(555, 280, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
 
 	//バリア枚数の描画
 	for (int i = 0; i < player->GetBarrierCount(); i++)
@@ -185,7 +194,7 @@ void GameMainScene::Finalize()
 	//リザルトデータの書き込み
 	FILE* fp = nullptr;
 	//ファイルオープン
-	errno_t result = fopen_s(&fp, "Resource/dat/result_data.cav", "w");
+	errno_t result = fopen_s(&fp, "Resource/dat/result_data.csv", "w");
 
 	//エラーチェック
 	if (result != 0)

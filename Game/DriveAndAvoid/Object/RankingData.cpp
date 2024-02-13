@@ -130,7 +130,7 @@ void RankingData::SortData()
 	//エラーチェック
 	if (result != 0)
 	{
-		throw("Reaource/dat/ranking_data.csvが開けませんでした\n");
+		throw("Resource/dat/ranking_data.csvが開けませんでした\n");
 	}
 
 	//対象ファイルに書き込み

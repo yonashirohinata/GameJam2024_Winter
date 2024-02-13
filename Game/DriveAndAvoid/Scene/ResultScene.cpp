@@ -62,8 +62,12 @@ void ResultScene::Draw() const
 
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
 
-	SetFontSize(20);
-	DrawString(220, 170, "ゲームオーバー", GetColor(204, 0, 0));
+	SetFontSize(32);
+	//DrawString(220, 170, "ゲームオーバー", GetColor(204, 0, 0));
+	DrawString(200, 160, "プレイヤーWIN", GetColor(204, 0, 0));
+	//↓if文で表示させる妨害側のやつ
+	//if(設定された基準値 > score || player->GetHp() < 0.0f)
+	//DrawString(200, 160, "妨害側WIN", GetColor(204, 0, 0));
 	SetFontSize(16);
 	DrawString(180, 200, "走行距離     ", GetColor(0, 0, 0));
 	for (int i = 0; i < 3; i++)
@@ -112,7 +116,7 @@ void ResultScene::ReadResultData()
 	//避けた数と得点を取得
 	for (int i = 0; i < 3; i++)
 	{
-		fscanf_s(fp, "%6d\n", &enemy_count[i]);
+		fscanf_s(fp, "%6d,\n", &enemy_count[i]);
 	}
 
 	//ファイルクローズ
