@@ -31,8 +31,12 @@ void Enemy::Update(float speed)
 {
 	//移動処理
 	Movement();
+	//ターゲット場所指定
+	Target();
 	//位置情報に移動量を加算する
 	location += Vector2D(0.0f, 0.0f);
+	//位置情報に移動量を加算する
+	box_size += Vector2D(0.0f, 0.0f);
 }
 
 void Enemy::Draw() const
@@ -77,18 +81,12 @@ void Enemy::Movement()
 	{
 			move += Vector2D(-100.0f, 0.0f);
 			cursor--;
-			time = 0; // 待機時間リセット
 	}
-	else 
-	{
-			time++;
-	}
-
+	
 	if (InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_RIGHT))
 	{
 		cursor++;
 		move += Vector2D(100.0f, 0.0f);
-		time = 0;  // 待機時間リセット
 	}
 
 	location += move;
@@ -101,4 +99,35 @@ void Enemy::Movement()
 		
 }
 	
-	
+//当たり判定の大きさを取得
+void Enemy::Target()
+{
+	Vector2D move2 = Vector2D(0.0f);
+
+	//場所指定（１レーン）
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 50.0f)
+	{
+		move2 = Vector2D(location.x, 300.0f);
+	}
+	//場所指定（２レーン）
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 150.0f)
+	{
+		move2 = Vector2D(150.0f, 300.0f);
+	}
+	////場所指定（３レーン）
+	//if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 250.0f)
+	//{
+	//	box_size = Vector2D(250.0f, 300.0f);
+	//}
+	////場所指定（４レーン）
+	//if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 350.0f)
+	//{
+	//	box_size = Vector2D(350.0f, 300.0f);
+	//}
+	////場所指定（５レーン）
+	//if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 450.0f)
+	//{
+	//	box_size = Vector2D(450.0f, 300.0f);
+	//}
+	box_size += move2;
+}
