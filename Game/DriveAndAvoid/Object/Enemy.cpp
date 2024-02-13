@@ -23,6 +23,8 @@ void Enemy::Initialize()
 	box_size = Vector2D(31.0f, 60.0f);
 	//‘¬‚³‚Ìİ’è
 	speed = (float)(this->type * 2);
+	//‰æ‘œ‚Ì“Ç‚İ‚İ
+	image = LoadGraph("Resource/images/target.png");
 }
 
 void Enemy::Update(float speed)
