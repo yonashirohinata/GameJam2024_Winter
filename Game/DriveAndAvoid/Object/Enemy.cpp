@@ -75,11 +75,13 @@ void Enemy::Movement()
 	{
 		time++;
 		if (time > 5) {
-		move += Vector2D(-100.0f, 0.0f);
-		cursor--;
-		time = 0; // 待機時間リセット
+			move += Vector2D(-100.0f, 0.0f);
+			cursor--;
+			time = 0; // 待機時間リセット
+		}
 	}
-	else {
+	else 
+	{
 			time = 0;
 	}
 
