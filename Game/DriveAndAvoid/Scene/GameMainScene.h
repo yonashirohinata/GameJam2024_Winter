@@ -10,6 +10,9 @@ private:
 	int high_score;			//ハイスコア
 	int back_ground;		//背景画像
 	int barrier_image;		//バリア画像
+	int car_engine_image;	//加速アイテム画像
+	int oil_tank_image;		//燃料アイテム画像
+	int tool_box_image;		//HP回復アイテム画像
 	int mileage;			//走行距離
 	int enemy_image[3];		//敵画像
 	int enemy_count[3];		//通りすぎた敵カウント
