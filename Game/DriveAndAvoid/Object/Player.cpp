@@ -19,7 +19,7 @@ void Player::Initialize()
 	location = Vector2D(320.0f, 380.0f);
 	box_size = Vector2D(31.0f, 60.0f);
 	angle = 0.0f;
-	speed = 3.0f;
+	speed = 5.0f;
 	hp = 1000;
 	fuel = 20000;
 	barrier_count = 3;
@@ -40,9 +40,9 @@ void Player::Update()
 	//操作不可状態であれば、自信を回復させる
 	if (!is_active)
 	{
-		angle += DX_PI_F / 24.0f;
+		angle += DX_PI_F / 4.0f;
 		speed = 1.0f;
-		if (angle >= DX_PI_F * 4.0f)
+		if (angle >= DX_PI_F * 6.0f)
 		{
 			is_active = true;
 		}
@@ -174,24 +174,24 @@ void Player::Movement()
 	//十字移動処理
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_LEFT))
 	{
-		move += Vector2D(-1.0f, 0.0f);
+		move += Vector2D(-4.0f, 0.0f);
 		angle = -DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_RIGHT))
 	{
-		move += Vector2D(1.0f, 0.0f);
+		move += Vector2D(4.0f, 0.0f);
 		angle = DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_UP))
 	{
-		move += Vector2D(0.0f, -1.0f);
+		move += Vector2D(0.0f, -2.5f);
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_DOWN))
 	{
-		move += Vector2D(0.0f, 1.0f);
+		move += Vector2D(0.0f, 2.5f);
 	}
 
 	location += move;
