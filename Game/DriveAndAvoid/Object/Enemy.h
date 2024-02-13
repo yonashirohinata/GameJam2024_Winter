@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Utility/Vector2D.h"
+#include "../Object/Player.h"
 
 class Enemy
 {
@@ -27,5 +28,6 @@ public:
 
 private:
 	void Movement();			//移動処理
+	void Target();				//ターゲット場所指定
 
 };
