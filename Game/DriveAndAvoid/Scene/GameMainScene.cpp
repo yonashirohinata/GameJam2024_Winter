@@ -3,7 +3,9 @@
 #include "DxLib.h"
 #include <math.h>
 
-GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), mileage(0), player(nullptr), enemy(nullptr),item(nullptr)
+
+GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), mileage(0), player(nullptr), enemy(nullptr), item(nullptr)
+
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -28,6 +30,9 @@ void GameMainScene::Initialize()
 	//画像の読み込み
 	back_ground = LoadGraph("Resource/images/back.bmp");
 	barrier_image = LoadGraph("Resource/images/barrier.png");
+	car_engine_image = LoadGraph("Resource/images/car_engine.png");
+	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
+	tool_box_image = LoadGraph("Resource/images/tool_box.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
 	car_engine_image = LoadGraph("Resource/images/car_engine.png");
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
@@ -46,18 +51,17 @@ void GameMainScene::Initialize()
 	{
 		throw("Resource/images/barrier.pngがありません\n");
 	}
-	//エラーチェック
 	if (car_engine_image == -1)
 	{
-		throw("Resource/images/car_engine.bmpがありません");
+		throw("Resource/images/car_engine.pngがありません\n");
 	}
 	if (oil_tank_image == -1)
 	{
-		throw("Resource/images/oil_tank.bmpがありません");
+		throw("Resource/images/oil_tank.pngがありません\n");
 	}
 	if (tool_box_image == -1)
 	{
-		throw("Resource/images/tool_box.bmpがありません");
+		throw("Resource/images/tool_box.pngがありません\n");
 	}
 	//オブジェクトの生成
 	player = new Player;
@@ -209,19 +213,19 @@ void GameMainScene::Draw() const
 	DrawFormatString(510, 20, GetColor(0, 0, 0), "妨害がHITした数");
 	//DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", 妨害した数の変数);
 	DrawFormatString(510, 80, GetColor(0, 0, 0), "獲得した\nアイテムの数");
-	for (int i = 0; i < 3; i++)
+	//for (int i = 1; i < 3; i++)
 	{
-		DrawRotaGraph(523 + (i * 50), 140, 0.3, 0, enemy_image[i], TRUE, FALSE);
-		DrawFormatString(510 + (i * 50), 160, GetColor(255, 255, 255), "%03d", enemy_count[i]);
+		//DrawRotaGraph(523 + (i * 50), 140, 0.3, 0, enemy_image[i], TRUE, FALSE);
+		//DrawFormatString(510 + (i * 50), 160, GetColor(255, 255, 255), "%03d", enemy_count[i]);
 	}
-	//DrawRotaGraph(523, 140, 0.3, 0, 燃料イメージ, TRUE, FALSE);
-	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[1]);
-	//DrawRotaGraph(573, 140, 0.3, 0, 加速イメージ, TRUE, FALSE);
+	DrawRotaGraph(520, 140, 0.7, 0, oil_tank_image, TRUE, FALSE);
+	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[i]);
+	DrawRotaGraph(570, 140, 0.7, 0, car_engine_image, TRUE, FALSE);
 	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[2]);
-	//DrawRotaGraph(623, 140, 0.3, 0, HPイメージ, TRUE, FALSE);
+	DrawRotaGraph(620, 140, 0.7, 0, tool_box_image, TRUE, FALSE);
 	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[3]);
 
-	DrawFormatString(510, 220, GetColor(0, 0, 0), "走行距離");
+	DrawFormatString(510, 220, GetColor(0, 0, 0), "スコア");
 	DrawFormatString(555, 240, GetColor(255, 255, 255), "%08d", mileage / 10);
 	DrawFormatString(510, 260, GetColor(0, 0, 0), "スピード");
 	DrawFormatString(555, 280, GetColor(255, 255, 255), "%08.1f", player->GetSpeed());
