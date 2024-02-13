@@ -30,7 +30,7 @@ void Player::Initialize()
 	//エラーチェック
 	if (image == -1)
 	{
-		throw("Resorce/images/car1pol.bmpがありません\n");
+		throw("Resource/images/car1pol.bmpがありません\n");
 	}
 }
 
