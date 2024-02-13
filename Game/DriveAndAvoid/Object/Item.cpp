@@ -26,8 +26,34 @@ void Item::Initialize()
 	
 
 }
+
+void Item::Update(float speed)
+{
+
+}
+
 //•`‰æˆ—
 void Item::Draw() const
 {
 	DrawGraphF(location.x,location.y, car_engine, TRUE);
+}
+
+void Item::Finalize()
+{
+
+}
+
+int Item::GetType() const
+{
+	return this->item_type;
+}
+
+Vector2D Item::GetLocation() const
+{
+	return this->location;
+}
+
+Vector2D Item::GetBoxSize() const
+{
+	return this->box_size;
 }
