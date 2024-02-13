@@ -10,7 +10,8 @@ private:
 	float speed;			//速さ
 	Vector2D location;		//位置情報
 	Vector2D box_size;		//当たり判定の大きさ
-
+	int cursor;				//カーソルの選択
+	int time;				//待機時間
 public:
 	Enemy(int type, int handle);
 	~Enemy();
@@ -23,4 +24,8 @@ public:
 	int GetType() const;				//タイプの取得
 	Vector2D GetLocation() const;		//位置情報の取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさを取得
+
+private:
+	void Movement();			//移動処理
+
 };
