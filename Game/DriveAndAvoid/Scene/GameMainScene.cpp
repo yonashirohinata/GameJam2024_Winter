@@ -3,13 +3,16 @@
 #include "DxLib.h"
 #include <math.h>
 
-GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), mileage(0), player(nullptr), enemy(nullptr)
+
+GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), mileage(0), player(nullptr), enemy(nullptr), item(nullptr)
+
 {
 	for (int i = 0; i < 3; i++)
 	{
 		enemy_image[i] = NULL;
 		enemy_count[i] = NULL;
 		item_image[i] = NULL;
+		item_count[i] = NULL;
 	}
 }
 
@@ -31,7 +34,9 @@ void GameMainScene::Initialize()
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
 	tool_box_image = LoadGraph("Resource/images/tool_box.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
-
+	car_engine_image = LoadGraph("Resource/images/car_engine.png");
+	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
+	tool_box_image = LoadGraph("Resource/images/tool_box.png");
 
 	//エラーチェック
 	if (back_ground == -1)
@@ -58,11 +63,10 @@ void GameMainScene::Initialize()
 	{
 		throw("Resource/images/tool_box.pngがありません\n");
 	}
-
-
 	//オブジェクトの生成
 	player = new Player;
 	enemy = new Enemy* [10];
+	item = new Item* [10];
 
 	//オブジェクトの初期化
 	player->Initialize();
@@ -70,6 +74,7 @@ void GameMainScene::Initialize()
 	for (int i = 0; i < 10; i++)
 	{
 		enemy[i] = nullptr;
+		item[i] = nullptr;
 	}
 }
 
@@ -92,6 +97,20 @@ eSceneType GameMainScene::Update()
 				int type = GetRand(3) % 3;
 				enemy[i] = new Enemy(type, enemy_image[type]);
 				enemy[i]->Initialize();
+				break;
+			}
+		}
+	}
+	//アイテム生成処理
+	if (mileage / 40 % 100 == 0)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			if (item[i] == nullptr)
+			{
+				int item_type = GetRand(3) % 3;
+				item[i] = new Item(item_type, item_image[item_type]);
+				item[i]->Initialize();
 				break;
 			}
 		}
@@ -124,6 +143,33 @@ eSceneType GameMainScene::Update()
 			}
 		}
 	}
+	//アイテムの更新と当たり判定チェック
+	for (int i = 0; i < 10; i++)
+	{
+		if (item[i] != nullptr)
+		{
+			item[i]->Update(player->GetSpeed());
+
+			//画面外に行ったら、敵を削除してスコア加算
+			if (item[i]->GetLocation().y >= 640.0f)
+			{
+				item_count[item[i]->GetType()] ++;
+				item[i]->Finalize();
+				delete item[i];
+				item[i] = nullptr;
+			}
+
+			//当たり判定の確認
+			if (IsHitCheck_item(player, item[i]))
+			{
+				player->SetActive(false);
+				player->DecreaseHp(-50.0f);
+				enemy[i]->Finalize();
+				delete enemy[i];
+				enemy[i] = nullptr;
+			}
+		}
+	}
 
 	//プレイヤーの燃料か体力が0未満なら、リザルトに遷移する
 	if (player->GetFuel() < 0.0f || player->GetHp() < 0.0f)
@@ -147,6 +193,14 @@ void GameMainScene::Draw() const
 		if (enemy[i] != nullptr)
 		{
 			enemy[i]->Draw();
+		}
+	}
+	//アイテムの描画
+	for (int i = 0; i < 10; i++)
+	{
+		if (item[i] != nullptr)
+		{
+			item[i]->Draw();
 		}
 	}
 
@@ -221,7 +275,7 @@ void GameMainScene::Finalize()
 	//スコアを保存
 	fprintf(fp, "%d,\n", score);
 
-	//f避けた数と得点を保存
+	//避けた数と得点を保存
 	for (int i = 0; i < 3; i++)
 	{
 		fprintf(fp, "%d,\n", enemy_count[i]);
@@ -245,6 +299,18 @@ void GameMainScene::Finalize()
 	}
 
 	delete[] enemy;
+
+	for (int i = 0; i < 10; i++)
+	{
+		if (item[i] != nullptr)
+		{
+			item[i]->Finalize();
+			delete item[i];
+			item[i] = nullptr;
+		}
+	}
+
+	delete[] item;
 }
 
 //現在のシーン情報を取得
@@ -284,6 +350,30 @@ bool GameMainScene::IsHitCheck(Player* p, Enemy* e)
 
 	//当たり判定サイズの大きさを取得
 	Vector2D box_ex = p->GetBoxSize() + e->GetBoxSize();
+
+	//コリジョンデータより位置情報の差分が小さいなら、ヒット判定とする
+	return((fabsf(diff_location.x) < box_ex.x) && (fabsf(diff_location.y) < box_ex.y));
+}
+//当たり判定処理（プレイヤーとアイテム）
+bool GameMainScene::IsHitCheck_item(Player* p, Item* i)
+{
+	////プレイヤーがバリアを貼っていたら、当たり判定を無視する
+	//if (p->IsBarrier())
+	//{
+	//	return false;
+	//}
+
+	//アイテム情報が無ければ、当たり判定を無視する
+	if (i == nullptr)
+	{
+		return false;
+	}
+
+	//位置情報の差分を取得
+	Vector2D diff_location = p->GetLocation() - i->GetLocation();
+
+	//当たり判定サイズの大きさを取得
+	Vector2D box_ex = p->GetBoxSize() + i->GetBoxSize();
 
 	//コリジョンデータより位置情報の差分が小さいなら、ヒット判定とする
 	return((fabsf(diff_location.x) < box_ex.x) && (fabsf(diff_location.y) < box_ex.y));

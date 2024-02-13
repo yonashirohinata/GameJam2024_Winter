@@ -4,18 +4,18 @@
 class Item
 {
 private:
-	//int type;				//タイプ
-	//int image;				//画像
-	//float speed;			//速さ
+	int item_type;				//タイプ
+	int item_image;				//画像
+	float item_speed;			//速さ
 	Vector2D location;		//位置情報
-	//Vector2D box_size;		//当たり判定の大きさ
+	Vector2D box_size;		//当たり判定の大きさ
 
 	int car_engine;
 	int oil_tank;
 	int tool_box;
 
 public:
-	Item(int handle);
+	Item(int item_type,int handle);
 	~Item();
 
 	void Initialize();				//初期化処理

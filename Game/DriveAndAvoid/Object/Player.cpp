@@ -165,6 +165,18 @@ bool Player::IsBarrier() const
 	return (barrier != nullptr);
 }
 
+bool Player::IsVanish() const
+{
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 //ˆÚ“®ˆ—
 void Player::Movement()
 {
@@ -217,4 +229,9 @@ void Player::Acceleration()
 	{
 		speed += 1.0f;
 	}
+}
+
+void Player::Vanishment()
+{
+	
 }
