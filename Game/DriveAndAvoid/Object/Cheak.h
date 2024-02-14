@@ -8,7 +8,7 @@ private:
 	Vector2D box_size;		//“–‚½‚è”»’è‚Ì‘å‚«‚³
 	bool flg;
 	int time;				//•b”
-
+	int damage;				//‰æ‘œ
 public:
 	Cheak(int type);
 	~Cheak();

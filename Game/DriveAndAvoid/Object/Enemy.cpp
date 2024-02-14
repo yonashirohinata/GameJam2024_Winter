@@ -27,6 +27,7 @@ void Enemy::Initialize()
 	speed = (float)(this->type * 3);
 	time = 0; //待機時間
 	flg = false;
+	attackflg = true;
 	lane1 = 0;
 	//画像の読み込み
 	image = LoadGraph("Resource/images/target.png");
@@ -44,12 +45,24 @@ void Enemy::Update(float speed)
 	WeakTarget();
 	//ターゲット場所指定(大)
 	StrongTarget();
-	
+	//ダメージが入るまでのタイマー
 	Timer();
 	if (flg == true) {
 		time++;
 	}
 	
+	if (time > 300) {
+		time = 0;
+		flg = false;
+		attackflg = false;
+	}
+	//ダメージ範囲内にいるか
+	if (time > 150) {
+		box_size = Vector2D(31.0f, 300.0f);
+	}
+	else if (time > 250) {
+		box_size = Vector2D(31.0f, 60.0f);
+	}
 	//位置情報に移動量を加算する
 	location += Vector2D(0.0f, 0.0f);
 	////位置情報に移動量を加算する
@@ -60,12 +73,13 @@ void Enemy::Draw() const
 {
 	//敵画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.5, 0.0, image, TRUE);
-	if (InputControl::GetButton(XINPUT_BUTTON_X)) {
-		DrawRotaGraphF(location.x, location.y + 200, 3.0, 0.0, damage, TRUE);
-	}
-	else if (InputControl::GetButton(XINPUT_BUTTON_A)) {
+	if (time > 150) {
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, damage, TRUE);
 	}
+	
+	/*else if (time > 250) {
+		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, bakuhatsu, TRUE);
+	}*/
 }
 
 void Enemy::Finalize()
@@ -107,13 +121,13 @@ void Enemy::Movement()
 	
 
 	//十字移動処理
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_LEFT))
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_LEFT) && attackflg == true)
 	{
 			move += Vector2D(-100.0f, 0.0f);
 			cursor--;
 	}
 	
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT))
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) && attackflg == true)
 	{
 		cursor++;
 		move += Vector2D(100.0f, 0.0f);
@@ -132,33 +146,31 @@ void Enemy::Movement()
 //ボタンを押したときの範囲攻撃（小）
 void Enemy::WeakTarget()
 {
-
+	
 	//場所指定（１レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 50.0f)
 	{
-		if (time > 10) {
-			box_size = Vector2D(31.0f, 300.0f);
-		}
+		attackflg = false;
 	}
 	//場所指定（２レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 150.0f)
 	{
-		box_size = Vector2D(31.0f, 300.0f);
+		attackflg = false;
 	}
 	//場所指定（３レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 250.0f)
 	{
-		box_size = Vector2D(31.0f, 300.0f);
+		attackflg = false;
 	}
 	//場所指定（４レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 350.0f)
 	{
-		box_size = Vector2D(31.0f, 300.0f);
+		attackflg = false;
 	}
 	//場所指定（５レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 450.0f)
 	{
-		box_size = Vector2D(31.0f, 300.0f);
+		attackflg = false;
 	}
 	
 }

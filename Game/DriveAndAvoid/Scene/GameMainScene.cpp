@@ -92,8 +92,8 @@ eSceneType GameMainScene::Update()
 	player->Update();
 
 	for (int i = 0; i < 5; i++) {
-		if (enemy[0] != nullptr) {
-			cheak[i]->Update(enemy[0]->GetLocation());
+		if (cheak[0] != nullptr) {
+			cheak[i]->Update(cheak[0]->GetLocation());
 		}
 	}
 	
@@ -106,11 +106,11 @@ eSceneType GameMainScene::Update()
 	{
 		for (int i = 0; i < 1; i++)
 		{
-			if (enemy[i] == nullptr)
+			if (enemy[0] == nullptr)
 			{
 				int type = GetRand(3) % 3;
-				enemy[i] = new Enemy(type, enemy_image[type]);
-				enemy[i]->Initialize();
+				enemy[0] = new Enemy(type, enemy_image[type]);
+				enemy[0]->Initialize();
 				break;
 			}
 		}
@@ -131,47 +131,49 @@ eSceneType GameMainScene::Update()
 	}
 
 
-
+	// 広範囲ダメージの判定処理
 	for (int i = 0; i < 5; i++)
 	{
-		
+		if (cheak[i] != nullptr)
+		{
+			cheak[i]->Update(player->GetSpeed());
 			//当たり判定の確認
 			if (IsHitCheck2(player, cheak[i]))
 			{
 				player->SetActive(false);
 				player->DecreaseHp(-50.0f);
-				
+
 			}
-		
+		}
 	}
 
 	//敵の更新と当たり判定チェック
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	if (enemy[i] != nullptr)
-	//	{
-	//		enemy[i]->Update(player->GetSpeed());
+	for (int i = 0; i < 10; i++)
+	{
+		if (enemy[i] != nullptr)
+		{
+			enemy[i]->Update(player->GetSpeed());
 
-	//		//画面外に行ったら、敵を削除してスコア加算
-	//		if (enemy[i]->GetLocation().y >= 640.0f)
-	//		{
-	//			enemy_count[enemy[i]->GetType()] ++;
-	//			enemy[i]->Finalize();
-	//			delete enemy[i];
-	//			enemy[i] = nullptr;
-	//		}
+			//画面外に行ったら、敵を削除してスコア加算
+			if (enemy[i]->GetLocation().y >= 640.0f)
+			{
+				enemy_count[enemy[i]->GetType()] ++;
+				enemy[i]->Finalize();
+				delete enemy[i];
+				enemy[i] = nullptr;
+			}
 
-	//		//当たり判定の確認
-	//		if (IsHitCheck(player, enemy[i]))
-	//		{
-	//			player->SetActive(false);
-	//			player->DecreaseHp(-50.0f);
-	//			enemy[i]->Finalize();
-	//			delete enemy[i];
-	//			enemy[i] = nullptr;
-	//		}
-	//	}
-	//}
+			//当たり判定の確認
+			if (IsHitCheck(player, enemy[i]))
+			{
+				player->SetActive(false);
+				player->DecreaseHp(-50.0f);
+				enemy[i]->Finalize();
+				delete enemy[i];
+				enemy[i] = nullptr;
+			}
+		}
+	}
 	//アイテムの更新と当たり判定チェック
 	for (int i = 0; i < 1; i++)
 	{
@@ -283,7 +285,7 @@ void GameMainScene::Draw() const
 
 
 	for (int i = 0; i < 5; i++) {
-				cheak[i]->Draw();
+			cheak[i]->Draw();
 	}
 
 }
@@ -388,14 +390,12 @@ bool GameMainScene::IsHitCheck(Player* p, Enemy* e)
 
 	//当たり判定サイズの大きさを取得
 	Vector2D box_ex = p->GetBoxSize() + e->GetBoxSize();
-	//当たらない判定サイズの大きさを取得
-	Vector2D box_ex2 = p->GetBoxSize() + e->GetBoxSize2();
 	//コリジョンデータより位置情報の差分が小さいなら、ヒット判定とする
 	return((fabsf(diff_location.x) < box_ex.x) && (fabsf(diff_location.y) < box_ex.y));
-	//コリジョンデータより位置情報に差分が入っているなら、ノーヒット判定とする
-	return((fabsf(diff_location.x) > box_ex2.x) && (fabsf(diff_location.y) > box_ex2.y));
+	
 }
-bool GameMainScene::IsHitCheck2(Player* p, Cheak* c)
+//当たり判定処理（プレイヤーと敵(範囲大)）
+bool GameMainScene::IsHitCheck2(Player* p, Cheak* e)
 {
 	//プレイヤーがバリアを貼っていたら、当たり判定を無視する
 	if (p->IsBarrier())
@@ -403,18 +403,18 @@ bool GameMainScene::IsHitCheck2(Player* p, Cheak* c)
 		return false;
 	}
 
-	//敵情報が無ければ、当たり判定を無視する
-	if (c == nullptr)
-	{
-		return false;
-	}
+	////敵情報が無ければ、当たり判定を無視する
+	//if (c == nullptr)
+	//{
+	//	return false;
+	//}
 
 
 	//位置情報の差分を取得
-	Vector2D diff_location = p->GetLocation() - c->GetLocation();
+	Vector2D diff_location = p->GetLocation() - e->GetLocation();
 
 	//当たり判定サイズの大きさを取得
-	Vector2D box_ex = p->GetBoxSize() + c->GetBoxSize();
+	Vector2D box_ex = p->GetBoxSize() + e->GetBoxSize();
 	
 	//コリジョンデータより位置情報の差分が小さいなら、ヒット判定とする
 	return((fabsf(diff_location.x) < box_ex.x) && (fabsf(diff_location.y) < box_ex.y));
