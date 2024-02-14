@@ -2,7 +2,7 @@
 #include "DxLib.h"
 #include "../Utility/InputControl.h"
 
-Item::Item(int item_type, int handle) :car_engine(NULL), oil_tank(NULL), tool_box(NULL), location(0.0f)
+Item::Item(int item_type, int handle) :type(item_type), image(handle), location(0.0f)
 {
 
 }
@@ -21,7 +21,7 @@ void Item::Initialize()
 	//“–‚½‚è”»’è‚ÌÝ’è
 	box_size = Vector2D(31.0f, 60.0f);
 	//‘¬‚³‚ÌÝ’è
-	item_speed = (float)(this->item_type * 2);
+	item_speed = (float)(this->type * 2);
 	
 	
 	
@@ -38,9 +38,9 @@ void Item::Update(float speed)
 //•`‰æˆ—
 void Item::Draw() const
 {
-	DrawGraphF(location.x,location.y, car_engine, TRUE);
-	DrawGraphF(location.x,location.y, oil_tank, TRUE);
-	DrawGraphF(location.x,location.y, tool_box, TRUE);
+	DrawGraphF(location.x,location.y, image, TRUE);
+	/*DrawGraphF(location.x,location.y, oil_tank, TRUE);
+	DrawGraphF(location.x,location.y, tool_box, TRUE);*/
 }
 
 void Item::Finalize()
@@ -50,7 +50,7 @@ void Item::Finalize()
 
 int Item::GetType() const
 {
-	return /*this->*/item_type;
+	return /*this->*/type;
 }
 
 Vector2D Item::GetLocation() const

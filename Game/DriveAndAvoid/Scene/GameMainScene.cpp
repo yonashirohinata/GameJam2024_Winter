@@ -34,9 +34,9 @@ void GameMainScene::Initialize()
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
 	tool_box_image = LoadGraph("Resource/images/tool_box.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
-	car_engine_image = LoadGraph("Resource/images/car_engine.png");
+	/*car_engine_image = LoadGraph("Resource/images/car_engine.png");
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
-	tool_box_image = LoadGraph("Resource/images/tool_box.png");
+	tool_box_image = LoadGraph("Resource/images/tool_box.png");*/
 
 	//エラーチェック
 	if (back_ground == -1)
@@ -70,6 +70,10 @@ void GameMainScene::Initialize()
 
 	//オブジェクトの初期化
 	player->Initialize();
+
+	item_image[0] = car_engine_image;
+	item_image[1] = oil_tank_image;
+	item_image[2] = tool_box_image;
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -164,9 +168,9 @@ eSceneType GameMainScene::Update()
 			{
 				player->SetActive(false);
 				player->DecreaseHp(-50.0f);
-				enemy[i]->Finalize();
-				delete enemy[i];
-				enemy[i] = nullptr;
+				item[i]->Finalize();
+				delete item[i];
+				item[i] = nullptr;
 			}
 		}
 	}
