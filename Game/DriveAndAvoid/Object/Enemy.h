@@ -30,8 +30,7 @@ public:
 	int GetType() const;				//タイプの取得
 	Vector2D GetLocation() const;		//位置情報の取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさを取得
-	Vector2D GetBoxSize2() const;		//当たり判定の大きさを取得
-	bool Timer();			//当たらないところにいるかを取得
+	void Timer();			//当たらないところにいるかを取得
 	void Cheaklane();		//レーンの番号を判定
 private:
 	void Movement();			//移動処理
