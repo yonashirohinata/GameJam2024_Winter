@@ -179,7 +179,7 @@ eSceneType GameMainScene::Update()
 		{
 			item[i]->Update(player->GetSpeed());
 
-			//画面外に行ったら、敵を削除してスコア加算
+			//画面外に行ったら、アイテムを削除してスコア加算
 			if (item[i]->GetLocation().y >= 640.0f)
 			{
 				item_count[item[i]->GetType()] ++;
@@ -191,6 +191,7 @@ eSceneType GameMainScene::Update()
 			//当たり判定の確認
 			if (IsHitCheck_item(player, item[i]))
 			{
+				item_count[item[i]->GetType()] ++;
 				/*player->SetActive(false);*/
 				/*player->DecreaseHp(-50.0f);*/
 				item[i]->Finalize();
@@ -242,17 +243,13 @@ void GameMainScene::Draw() const
 	DrawFormatString(510, 20, GetColor(0, 0, 0), "妨害がHITした数");
 	//DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", 妨害した数の変数);
 	DrawFormatString(510, 80, GetColor(0, 0, 0), "獲得した\nアイテムの数");
-	//for (int i = 1; i < 3; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		//DrawRotaGraph(523 + (i * 50), 140, 0.3, 0, enemy_image[i], TRUE, FALSE);
-		//DrawFormatString(510 + (i * 50), 160, GetColor(255, 255, 255), "%03d", enemy_count[i]);
+		DrawFormatString(508 + 50 * i, 160, GetColor(255, 255, 255), "%03d", item_count[i]);
 	}
-	DrawRotaGraph(520, 140, 0.7, 0, oil_tank_image, TRUE, FALSE);
-	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[i]);
-	DrawRotaGraph(570, 140, 0.7, 0, car_engine_image, TRUE, FALSE);
-	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[2]);
+	DrawRotaGraph(520, 140, 0.7, 0, car_engine_image, TRUE, FALSE);
+	DrawRotaGraph(570, 140, 0.7, 0, oil_tank_image, TRUE, FALSE);
 	DrawRotaGraph(620, 140, 0.7, 0, tool_box_image, TRUE, FALSE);
-	//DrawFormatString(510, 160, GetColor(255, 255, 255), "%03d", アイテムカウント[3]);
 
 	DrawFormatString(510, 220, GetColor(0, 0, 0), "スコア");
 	DrawFormatString(555, 240, GetColor(255, 255, 255), "%08d", mileage / 10);
@@ -266,10 +263,10 @@ void GameMainScene::Draw() const
 	}
 
 	//バリア枚数の描画
-	for (int i = 0; i < player->GetBarrierCount(); i++)
-	{
-		DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
-	}
+	//for (int i = 0; i < player->GetBarrierCount(); i++)
+	//{
+	//	DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
+	//}
 	//燃料ゲージの描画
 	float fx = 510.0f;
 	float fy = 390.0f;
