@@ -2,7 +2,7 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f), angle(0.0f), speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0), barrier(nullptr)
+Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f), angle(0.0f), speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0), barrier(nullptr),player_alpha(0),alpha_flg(0)
 {
 
 }
@@ -23,6 +23,8 @@ void Player::Initialize()
 	hp = 1000;
 	fuel = 20000;
 	barrier_count = 3;
+	player_alpha = 255;
+	alpha_flg = FALSE;
 
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
@@ -58,6 +60,9 @@ void Player::Update()
 	//加減速処理
 	Acceleration();
 
+	//透明化処理
+	Vanishment();
+
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_START)&& DX_INPUT_PAD1)
 	{
 		is_active = false;
@@ -88,8 +93,12 @@ void Player::Update()
 //描画処理
 void Player::Draw()
 {
+	//透明度設定
+	SetDrawBlendMode(DX_BLENDMODE_ALPHA, player_alpha);
 	//プレイヤー画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.0, angle, image, TRUE);
+	//透明度を元に戻す
+	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
 	//バリアが生成されていたら、描画を行う
 	if (barrier != nullptr)
@@ -165,16 +174,14 @@ bool Player::IsBarrier() const
 	return (barrier != nullptr);
 }
 
-bool Player::IsVanish() const
+int Player::IsVanish()
 {
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X))
 	{
-		return true;
+		alpha_flg = TRUE;
 	}
-	else
-	{
-		return false;
-	}
+
+	return alpha_flg;
 }
 
 //移動処理
@@ -186,24 +193,24 @@ void Player::Movement()
 	//十字移動処理
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_LEFT))
 	{
-		move += Vector2D(-4.0f, 0.0f);
+		move += Vector2D(-5.0f, 0.0f);
 		angle = -DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_RIGHT))
 	{
-		move += Vector2D(4.0f, 0.0f);
+		move += Vector2D(5.0f, 0.0f);
 		angle = DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_UP))
 	{
-		move += Vector2D(0.0f, -2.5f);
+		move += Vector2D(0.0f, -3.f);
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_DOWN))
 	{
-		move += Vector2D(0.0f, 2.5f);
+		move += Vector2D(0.0f, 2.f);
 	}
 
 	location += move;
@@ -233,5 +240,9 @@ void Player::Acceleration()
 
 void Player::Vanishment()
 {
-	
+	IsVanish();
+	if (IsVanish() == TRUE && player_alpha >= 40)
+	{
+		player_alpha -= 5;
+	}
 }
