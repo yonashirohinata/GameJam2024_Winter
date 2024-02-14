@@ -15,10 +15,12 @@ private:
 	float hp;				//体力
 	float fuel;				//燃料
 	int alpha_flg;			//透明度は有効か？
+	bool vanish_flg;		//透明になったか？
+	int vanish_timer;		//透明化の時間
 	int player_alpha;		//プレイヤーの透明度
 	int barrier_count;		//バリアの枚数
 	Barrier* barrier;		//バリア
-
+	
 public:
 	Player();
 	~Player();
@@ -44,4 +46,5 @@ private:
 	void Movement();			//移動処理
 	void Acceleration();		//加速処理
 	void Vanishment();			//透明化処理
+	void Damage();				//ダメージ処理
 };

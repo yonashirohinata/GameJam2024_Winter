@@ -2,7 +2,9 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f), angle(0.0f), speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0), barrier(nullptr),player_alpha(0),alpha_flg(0)
+Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f), angle(0.0f), 
+speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0), barrier(nullptr),player_alpha(0),alpha_flg(0)
+,vanish_flg(nullptr),vanish_timer(0)
 {
 
 }
@@ -25,6 +27,8 @@ void Player::Initialize()
 	barrier_count = 3;
 	player_alpha = 255;
 	alpha_flg = FALSE;
+	vanish_flg = FALSE;
+	vanish_timer = 0;
 
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
@@ -39,7 +43,7 @@ void Player::Initialize()
 //更新処理
 void Player::Update()
 {
-	//操作不可状態であれば、自信を回復させる
+	//操作不可状態であれば、自身を回復させる
 	if (!is_active)
 	{
 		angle += DX_PI_F / 4.0f;
@@ -174,11 +178,14 @@ bool Player::IsBarrier() const
 	return (barrier != nullptr);
 }
 
+//透明化するか？を取得
 int Player::IsVanish()
 {
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_X))
 	{
 		alpha_flg = TRUE;
+		vanish_timer = 0;
+		vanish_flg = false;
 	}
 
 	return alpha_flg;
@@ -238,11 +245,28 @@ void Player::Acceleration()
 	}
 }
 
+//透明化処理
 void Player::Vanishment()
 {
 	IsVanish();
 	if (IsVanish() == TRUE && player_alpha >= 40)
 	{
 		player_alpha -= 5;
+	}
+	else if (IsVanish() == TRUE && player_alpha <= 40)
+	{
+		//透明化完了
+		vanish_flg = true;
+	}
+	//透明化が完了している&透明化の時間が300以下なら
+	if (vanish_flg == true && vanish_timer <= 300)
+	{
+		vanish_timer++;
+	}
+	//透明化の解除処理
+	if (vanish_timer >= 300 && player_alpha <= 255)
+	{
+		alpha_flg = FALSE;
+		player_alpha += 5;
 	}
 }
