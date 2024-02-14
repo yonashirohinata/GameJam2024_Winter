@@ -20,7 +20,9 @@ void Item::Initialize()
 	location = Vector2D(250.0f, 60.0f);
 	//“–‚½‚è”»’è‚ÌÝ’è
 	box_size = Vector2D(31.0f, 60.0f);
-	//‰æ‘œ‚Ì“Ç‚Ýž‚Ý
+	//‘¬‚³‚ÌÝ’è
+	item_speed = (float)(this->item_type * 2);
+	
 	
 	
 	
@@ -29,13 +31,16 @@ void Item::Initialize()
 
 void Item::Update(float speed)
 {
-
+	//ˆÊ’uî•ñ‚ÉˆÚ“®—Ê‚ð‰ÁŽZ‚·‚é
+	location += Vector2D(0.0f, this->item_speed + speed - 6);
 }
 
 //•`‰æˆ—
 void Item::Draw() const
 {
 	DrawGraphF(location.x,location.y, car_engine, TRUE);
+	DrawGraphF(location.x,location.y, oil_tank, TRUE);
+	DrawGraphF(location.x,location.y, tool_box, TRUE);
 }
 
 void Item::Finalize()
@@ -45,15 +50,15 @@ void Item::Finalize()
 
 int Item::GetType() const
 {
-	return this->item_type;
+	return /*this->*/item_type;
 }
 
 Vector2D Item::GetLocation() const
 {
-	return this->location;
+	return /*this->*/location;
 }
 
 Vector2D Item::GetBoxSize() const
 {
-	return this->box_size;
+	return /*this->*/box_size;
 }

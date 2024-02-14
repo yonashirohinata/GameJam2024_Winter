@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Utility/Vector2D.h"
+
 class Item
 {
 private:
