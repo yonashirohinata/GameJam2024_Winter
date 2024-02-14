@@ -29,7 +29,7 @@ public:
 	}
 
 	//•`‰æˆ—
-	virtual void Draw() const {}
+	virtual void Draw() const{}
 
 	//I—¹ˆ—
 	virtual void Finalize(){}
