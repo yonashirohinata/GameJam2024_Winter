@@ -166,8 +166,8 @@ eSceneType GameMainScene::Update()
 			//“–‚½‚è”»’è‚ÌŠm”F
 			if (IsHitCheck_item(player, item[i]))
 			{
-				player->SetActive(false);
-				player->DecreaseHp(-50.0f);
+				/*player->SetActive(false);*/
+				/*player->DecreaseHp(-50.0f);*/
 				item[i]->Finalize();
 				delete item[i];
 				item[i] = nullptr;
