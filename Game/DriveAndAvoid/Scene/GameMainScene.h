@@ -4,7 +4,7 @@
 #include "../Object/Player.h"
 #include "../Object/Enemy.h"
 #include "../Object/Item.h"
-
+#include "../Object/Cheak.h"
 class GameMainScene : public SceneBase
 {
 private:
@@ -22,6 +22,8 @@ private:
 	Player* player;			//プレイヤー
 	Enemy** enemy;			//敵
 	Item** item;             //アイテム
+	Cheak* cheak[5];			//判定
+
 
 public:
 	GameMainScene();
@@ -40,5 +42,7 @@ private:
 
 	//当たり判定
 	bool IsHitCheck(Player* p, Enemy* e);
+
+	bool IsHitCheck2(Player* p, Cheak* c);
 	bool IsHitCheck_item(Player* p, Item* i);
 };

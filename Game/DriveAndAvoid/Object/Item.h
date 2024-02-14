@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../Utility/Vector2D.h"
+
 class Item
 {
 private:
-	int item_type;				//タイプ
+	int type;				//タイプ
 	int item_image;				//画像
 	float item_speed;			//速さ
 	Vector2D location;		//位置情報
@@ -13,9 +14,10 @@ private:
 	int car_engine;
 	int oil_tank;
 	int tool_box;
+	int image;
 
 public:
-	Item(int item_type,int handle);
+	Item(int item_type, int handle);
 	~Item();
 
 	void Initialize();				//初期化処理
