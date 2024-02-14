@@ -33,7 +33,10 @@ void Enemy::Initialize()
 	image = LoadGraph("Resource/images/target.png");
 	
 	damage = LoadGraph("Resource/images/dama.png");
-	bakuhatsu = LoadGraph("Resource/images/bakuhatsu.png");
+	//’ˆÓŽž‚Ì‰æ‘œ
+	Note = LoadGraph("Resource/images/Note.png");
+	//ƒAƒEƒgƒ][ƒ“‚É‚¢‚é‚Æ‚«‚Ì‰æ‘œ
+	Dangerous = LoadGraph("Resource/images/Dangerous.png");
 	
 }
 
@@ -51,17 +54,18 @@ void Enemy::Update(float speed)
 		time++;
 	}
 	
-	if (time > 300) {
+	if (time > 200) {
 		time = 0;
 		flg = false;
-		attackflg = false;
+		
 	}
 	//ƒ_ƒ[ƒW”ÍˆÍ“à‚É‚¢‚é‚©
-	if (time > 150) {
+	if (time > 50 && attackflg == false) {
 		box_size = Vector2D(31.0f, 300.0f);
 	}
-	else if (time > 250) {
+	if (time > 100 && attackflg == false) {
 		box_size = Vector2D(31.0f, 60.0f);
+		attackflg = true;
 	}
 	//ˆÊ’uî•ñ‚ÉˆÚ“®—Ê‚ð‰ÁŽZ‚·‚é
 	location += Vector2D(0.0f, 0.0f);
@@ -73,7 +77,11 @@ void Enemy::Draw() const
 {
 	//“G‰æ‘œ‚Ì•`‰æ
 	DrawRotaGraphF(location.x, location.y, 1.5, 0.0, image, TRUE);
-	if (time > 150) {
+	if (time > 1 && time < 50 && attackflg == false) {
+		DrawRotaGraphF(location.x, location.y, 1.0, 0.0, Note, TRUE);
+	}
+	if (time > 50 && attackflg == false) {
+		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, damage, TRUE);
 	}
 	

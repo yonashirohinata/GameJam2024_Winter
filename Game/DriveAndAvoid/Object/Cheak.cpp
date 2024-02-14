@@ -40,13 +40,13 @@ void Cheak::Update(Vector2D vector2D)
 	//場所指定（１レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != vector2D.x)
 	{
-		/*box_size = Vector2D(31.0f, 300.0f);*/
+		box_size = Vector2D(31.0f, 300.0f);
 		flg = true;
 	}
-	//ダメージが入るまでのタイマー
-	if (flg == true) {
-		time++;
-	}
+	////ダメージが入るまでのタイマー
+	//if (flg == true) {
+	//	time++;
+	//}
 
 	//if (time > 300) {
 	//	time = 0;

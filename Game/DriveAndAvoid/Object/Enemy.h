@@ -9,7 +9,8 @@ private:
 	int type;				//タイプ
 	int image;				//画像
 	int damage;				//画像
-	int bakuhatsu;			//画像
+	int Note;			//注意時の画像
+	int	Dangerous;			//危ない時の画像
 	int lane1, lane2, lane3, lane4, lane5;     //レーンの場所
 	float speed;			//速さ
 	Vector2D location;		//位置情報
@@ -17,10 +18,11 @@ private:
 	Vector2D No_box_size;		//当たり判定の大きさ
 	int cursor;				//カーソルの選択
 	int time;				//待機時間
-	bool flg;				//フラグ（false.オフ、true.オン）
+	
 	bool attackflg;			//ダメージ範囲内にいるか
 	int Damage;
 public:
+	bool flg;				//フラグ（false.オフ、true.オン）
 	Enemy(int type, int handle);
 	~Enemy();
 

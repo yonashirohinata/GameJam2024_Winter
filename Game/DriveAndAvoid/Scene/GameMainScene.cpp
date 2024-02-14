@@ -287,7 +287,8 @@ void GameMainScene::Draw() const
 	for (int i = 0; i < 5; i++) {
 			cheak[i]->Draw();
 	}
-
+	
+	
 }
 
 //終了時処理
@@ -403,11 +404,11 @@ bool GameMainScene::IsHitCheck2(Player* p, Cheak* e)
 		return false;
 	}
 
-	////敵情報が無ければ、当たり判定を無視する
-	//if (c == nullptr)
-	//{
-	//	return false;
-	//}
+	//敵情報が無ければ、当たり判定を無視する
+	if (e == nullptr)
+	{
+		return false;
+	}
 
 
 	//位置情報の差分を取得
