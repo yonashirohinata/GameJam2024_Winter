@@ -8,12 +8,16 @@ class Enemy
 private:
 	int type;				//タイプ
 	int image;				//画像
+	int damage;				//画像
+	int bakuhatsu;			//画像
+	int lane1, lane2, lane3, lane4, lane5;     //レーンの場所
 	float speed;			//速さ
 	Vector2D location;		//位置情報
 	Vector2D box_size;		//当たり判定の大きさ
 	Vector2D No_box_size;		//当たり判定の大きさ
 	int cursor;				//カーソルの選択
 	int time;				//待機時間
+	bool flg;				//フラグ（0.オフ、1.オン）
 public:
 	Enemy(int type, int handle);
 	~Enemy();
@@ -27,7 +31,8 @@ public:
 	Vector2D GetLocation() const;		//位置情報の取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさを取得
 	Vector2D GetBoxSize2() const;		//当たり判定の大きさを取得
-
+	bool Timer();			//当たらないところにいるかを取得
+	void Cheaklane();		//レーンの番号を判定
 private:
 	void Movement();			//移動処理
 	void WeakTarget();				//ターゲット場所指定（小）
