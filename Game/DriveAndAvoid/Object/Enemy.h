@@ -17,7 +17,9 @@ private:
 	Vector2D No_box_size;		//当たり判定の大きさ
 	int cursor;				//カーソルの選択
 	int time;				//待機時間
-	bool flg;				//フラグ（0.オフ、1.オン）
+	bool flg;				//フラグ（false.オフ、true.オン）
+	bool attackflg;			//ダメージ範囲内にいるか
+	int Damage;
 public:
 	Enemy(int type, int handle);
 	~Enemy();
