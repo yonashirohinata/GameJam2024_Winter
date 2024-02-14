@@ -44,11 +44,12 @@ void Enemy::Update(float speed)
 	WeakTarget();
 	//ターゲット場所指定(大)
 	StrongTarget();
-	/*Timer();
 	
-	if (Timer() == true) {
+	Timer();
+	if (flg == true) {
 		time++;
-	}*/
+	}
+	
 	//位置情報に移動量を加算する
 	location += Vector2D(0.0f, 0.0f);
 	////位置情報に移動量を加算する
@@ -90,27 +91,14 @@ Vector2D Enemy::GetBoxSize() const
 	return box_size;
 }
 
-//当たらない判定の大きさを取得
-Vector2D Enemy::GetBoxSize2() const
-{
-	return No_box_size;
+
+
+void Enemy::Timer() {
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_A)) {
+		flg = true;
+	}
 }
 
-//待機時間
-//bool Enemy::Timer()
-//{
-//	
-//	if (InputControl::GetButtonDown(XINPUT_BUTTON_A)) {
-//		flg = true;
-//	}
-//}
-
-//void Enemy::Cheaklane() {
-//	if (location.x == 50.0f) {
-//		return lane1;
-//	}
-//
-//}
 //移動処理
 void Enemy::Movement()
 {
