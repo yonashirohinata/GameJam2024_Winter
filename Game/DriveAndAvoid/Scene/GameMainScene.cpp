@@ -240,6 +240,11 @@ void GameMainScene::Draw() const
 		DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
 	}
 
+	//バリア枚数の描画
+	for (int i = 0; i < player->GetBarrierCount(); i++)
+	{
+		DrawRotaGraph(520 + i * 25, 340, 0.2f, 0, barrier_image, TRUE, FALSE);
+	}
 	//燃料ゲージの描画
 	float fx = 510.0f;
 	float fy = 390.0f;
@@ -342,21 +347,25 @@ bool GameMainScene::IsHitCheck(Player* p, Enemy* e)
 	{
 		return false;
 	}
-
+	
 	//敵情報が無ければ、当たり判定を無視する
 	if (e == nullptr)
 	{
 		return false;
 	}
 
+	
 	//位置情報の差分を取得
 	Vector2D diff_location = p->GetLocation() - e->GetLocation();
 
 	//当たり判定サイズの大きさを取得
 	Vector2D box_ex = p->GetBoxSize() + e->GetBoxSize();
-
+	//当たらない判定サイズの大きさを取得
+	Vector2D box_ex2 = p->GetBoxSize() + e->GetBoxSize2();
 	//コリジョンデータより位置情報の差分が小さいなら、ヒット判定とする
 	return((fabsf(diff_location.x) < box_ex.x) && (fabsf(diff_location.y) < box_ex.y));
+	//コリジョンデータより位置情報に差分が入っているなら、ノーヒット判定とする
+	return((fabsf(diff_location.x) > box_ex2.x) && (fabsf(diff_location.y) > box_ex2.y));
 }
 //当たり判定処理（プレイヤーとアイテム）
 bool GameMainScene::IsHitCheck_item(Player* p, Item* i)
