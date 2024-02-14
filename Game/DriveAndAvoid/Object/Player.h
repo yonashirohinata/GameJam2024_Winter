@@ -14,6 +14,8 @@ private:
 	float speed;			//速さ
 	float hp;				//体力
 	float fuel;				//燃料
+	int alpha_flg;			//透明度は有効か？
+	int player_alpha;		//プレイヤーの透明度
 	int barrier_count;		//バリアの枚数
 	Barrier* barrier;		//バリア
 
@@ -36,7 +38,7 @@ public:
 	float GetHp() const;				//体力取得
 	int GetBarrierCount()  const;		//バリアの枚数取得
 	bool IsBarrier()  const;			//バリア有効か？を取得
-	bool IsVanish()const;				//透明化が有効か？を取得
+	int IsVanish();						//透明化が有効か？を取得
 	
 private:
 	void Movement();			//移動処理
