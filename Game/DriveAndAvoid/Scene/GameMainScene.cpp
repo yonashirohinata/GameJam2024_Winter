@@ -238,13 +238,13 @@ eSceneType GameMainScene::Update()
 				//‘Ì—Í‚Ì‰ñ•œˆ—
 				if (item[i]->GetType() == 1 && player->GetFuel() < 20000)
 				{
-					player->ControlHp(15);
+					player->ControlFuel(2500);
 					PlaySoundMem(heal_se, DX_PLAYTYPE_BACK, TRUE);
 				}
 				//”R—¿‚Ì‰ñ•œˆ—
 				if (item[i]->GetType() == 2 && player->GetHp() < 100)
 				{
-					player->ControlFuel(2500);
+					player->ControlHp(15);
 					PlaySoundMem(heal_se, DX_PLAYTYPE_BACK, TRUE);
 				}
 				item_count[item[i]->GetType()] ++;
@@ -264,13 +264,13 @@ eSceneType GameMainScene::Update()
 	if (cut_in == TRUE)
 	{
 		cut_time ++;
-		if (speed_direction.x <= 0 && cut_time <= 200)
+		if (speed_direction.x <= 0 && cut_time <= 50)
 		{
 			speed_direction.x = 0;
 		}
-		if (cut_time >= 200 && speed_direction.x >= 0) 
+		if (cut_time >= 50 && speed_direction.x >= 0) 
 		{
-			speed_direction.y += 100;
+			speed_direction.x += 100;
 			if (speed_direction.x >= 600)
 			{
 				cut_in = FALSE;
