@@ -89,6 +89,11 @@ Vector2D Cheak::GetBoxSize() const
 	return Vector2D();
 }
 
+void Cheak::Finalize()
+{
+
+}
+
 //ボタンを押したときの範囲攻撃（大）
 void Cheak::StrongTarget()
 {

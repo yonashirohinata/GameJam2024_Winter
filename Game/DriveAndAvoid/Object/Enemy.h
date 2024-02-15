@@ -14,6 +14,11 @@ private:
 	int lane1, lane2, lane3, lane4, lane5;     //レーンの場所
 	float speed;			//速さ
 	Vector2D location;		//位置情報
+	Vector2D location1;		//位置情報
+	Vector2D location2;		//位置情報
+	Vector2D location3;		//位置情報
+	Vector2D location4;		//位置情報
+	Vector2D location5;		//位置情報
 	Vector2D box_size;		//当たり判定の大きさ
 	Vector2D No_box_size;		//当たり判定の大きさ
 	int cursor;				//カーソルの選択

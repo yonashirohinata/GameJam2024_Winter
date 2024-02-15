@@ -16,6 +16,7 @@ private:
 	int damage;				//‰æ‘œ
 	bool attackflg;
 public:
+	void Finalize();				//I—¹ˆ—
 	Cheak(int type);
 	~Cheak();
 	void Update(Vector2D vector2D);

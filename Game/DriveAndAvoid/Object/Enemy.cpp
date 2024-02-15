@@ -19,6 +19,11 @@ void Enemy::Initialize()
 	//float random_x = (float)(GetRand(4) * 105 + 40);
 	//生成位置の設定
 	location = Vector2D(250.0f,60.0f);
+	location1 = Vector2D(50.0f, 60.0f);
+	location2 = Vector2D(150.0f, 60.0f);
+	location3 = Vector2D(250.0f, 60.0f);
+	location4 = Vector2D(350.0f, 60.0f);
+	location5 = Vector2D(450.0f, 60.0f);
 	//当たり判定の設定
 	box_size = Vector2D(31.0f, 60.0f);
 	//当たらない判定の場所設定
@@ -60,7 +65,11 @@ void Enemy::Update(float speed)
 	if (time > 200) {
 		time = 0;
 		flg = false;
-		
+		location1 = Vector2D(50.0f, 60.0f);
+		location2 = Vector2D(150.0f, 60.0f);
+		location3 = Vector2D(250.0f, 60.0f);
+		location4 = Vector2D(350.0f, 60.0f);
+		location5 = Vector2D(450.0f, 60.0f);
 	}
 	//ダメージ範囲内にいるか
 	if (time > 50 && attackflg == false ) {
@@ -200,32 +209,37 @@ void Enemy::WeakTarget()
 //ボタンを押したときの範囲攻撃（大）
 void Enemy::StrongTarget()
 {
-	////場所指定（１レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
-	//{
-	//	attackflg2 = false;
-	//}
-	//
-	////場所指定（２レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
-	//{
-	//	attackflg2 = false;
-	//}
-	////場所指定（３レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
-	//{
-	//	attackflg2 = false;
-	//}
-	////場所指定（４レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
-	//{
-	//	attackflg2 = false;
-	//}
-	////場所指定（５レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
-	//{
-	//	attackflg2 = false;
-	//}
+	//場所指定（１レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 50.0f)
+	{
+		location = NULL;
+		attackflg2 = false;
+	}
+
+	//場所指定（２レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 150.0f)
+	{
+		location2 = NULL;
+		attackflg2 = false;
+	}
+	//場所指定（３レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 250.0f)
+	{
+		location3 = NULL;
+		attackflg2 = false;
+	}
+	//場所指定（４レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 350.0f)
+	{
+		location4 = NULL;
+		attackflg2 = false;
+	}
+	//場所指定（５レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 450.0f)
+	{
+		location5 = NULL;
+		attackflg2 = false;
+	}
 	
 }
 
