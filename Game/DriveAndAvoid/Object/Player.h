@@ -6,6 +6,12 @@
 #define MAX_FUEL 20000
 #define MAX_HP 100
 
+struct Bright
+{
+	int red;
+	int green;
+	int blue;
+};
 class Player
 {
 private:
@@ -23,10 +29,7 @@ private:
 	int player_alpha;		//プレイヤーの透明度
 	int barrier_count;		//バリアの枚数
 	Barrier* barrier;		//バリア
-
-	int bright_red;
-	int bright_blue;
-	int bright_green;
+	Bright bright;			//明るさ調整用
 	
 public:
 	Player();
