@@ -68,7 +68,7 @@ void Cheak::Update(Vector2D vector2D)
 }
 
 void Cheak::Draw() {
-	DrawBox(location.x - 15, location.y, location.x + 15, location.y + 60, 0xffffff, false);
+	/*DrawBox(location.x - 15, location.y, location.x + 15, location.y + 60, 0xffffff, false);*/
 	/*if (time > 150) {
 		DrawRotaGraphF(location.x, location.y + 200, 2.0, 0.0, damage, TRUE);
 	}*/

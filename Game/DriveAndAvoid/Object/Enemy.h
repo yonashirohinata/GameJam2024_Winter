@@ -19,7 +19,8 @@ private:
 	int cursor;				//カーソルの選択
 	int time;				//待機時間
 	
-	bool attackflg;			//ダメージ範囲内にいるか
+	bool attackflg;			//ダメージ範囲内にいるか（１レーンのみ）
+	bool attackflg2;		//ダメージ範囲内にいるか（３レーン）
 	int Damage;
 public:
 	bool flg;				//フラグ（false.オフ、true.オン）

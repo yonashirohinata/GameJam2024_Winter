@@ -16,7 +16,7 @@ TitleScene::~TitleScene()
 void TitleScene::Initialize()
 {
 	//‰æ‘œ‚Ì“Ç‚İ‚İ
-	background_image = LoadGraph("Resource/images/Title.bmp");
+	background_image = LoadGraph("Resource/images/title2.png");
 	start_image = LoadGraph("Resource/images/start_m.bmp");
 	help_image = LoadGraph("Resource/images/help_m.bmp");
 	end_image = LoadGraph("Resource/images/end_m.bmp");

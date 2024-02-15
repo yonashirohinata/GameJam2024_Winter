@@ -27,7 +27,10 @@ void Enemy::Initialize()
 	speed = (float)(this->type * 3);
 	time = 0; //待機時間
 	flg = false;
+	//当たったか判定（１レーンのみ）
 	attackflg = true;
+	//当たったか判定（３レーン用）
+	attackflg2 = true;
 	lane1 = 0;
 	//画像の読み込み
 	image = LoadGraph("Resource/images/target.png");
@@ -60,12 +63,16 @@ void Enemy::Update(float speed)
 		
 	}
 	//ダメージ範囲内にいるか
-	if (time > 50 && attackflg == false) {
-		box_size = Vector2D(31.0f, 300.0f);
+	if (time > 50 && attackflg == false ) {
+		box_size = Vector2D(31.0f, 300.0f);	
 	}
-	if (time > 100 && attackflg == false) {
+	if (time > 50 && attackflg2 == false) {
+		box_size = Vector2D(150.0f, 300.0f);
+	}
+	if (time > 100 && attackflg == false || attackflg2 == false) {
 		box_size = Vector2D(31.0f, 60.0f);
 		attackflg = true;
+		attackflg2 = true;
 	}
 	//位置情報に移動量を加算する
 	location += Vector2D(0.0f, 0.0f);
@@ -77,13 +84,18 @@ void Enemy::Draw() const
 {
 	//敵画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.5, 0.0, image, TRUE);
-	if (time > 1 && time < 50 && attackflg == false) {
+	if (time > 1 && time < 50 && attackflg == false || attackflg2 == false) {
 		DrawRotaGraphF(location.x, location.y, 1.0, 0.0, Note, TRUE);
 	}
 	if (time > 50 && attackflg == false) {
 		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, damage, TRUE);
 	}
+	if (time > 70 && attackflg2 == false) {
+		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
+		DrawRotaGraphF(location.x, location.y + 200, 3.0, 0.0, damage, TRUE);
+	}
+	
 	
 	/*else if (time > 250) {
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, bakuhatsu, TRUE);
@@ -116,7 +128,7 @@ Vector2D Enemy::GetBoxSize() const
 
 
 void Enemy::Timer() {
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A)) {
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) || InputControl::GetButtonDown(XINPUT_BUTTON_X)) {
 		flg = true;
 	}
 }
@@ -129,13 +141,15 @@ void Enemy::Movement()
 	
 
 	//十字移動処理
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_LEFT) && attackflg == true)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_LEFT) && attackflg == true
+															 && attackflg2 == true)
 	{
 			move += Vector2D(-100.0f, 0.0f);
 			cursor--;
 	}
 	
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) && attackflg == true)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) && attackflg == true
+															  && attackflg2 == true)
 	{
 		cursor++;
 		move += Vector2D(100.0f, 0.0f);
@@ -186,33 +200,33 @@ void Enemy::WeakTarget()
 //ボタンを押したときの範囲攻撃（大）
 void Enemy::StrongTarget()
 {
-	////場所指定（１レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
-	//{
-	//	box_size = Vector2D(250.0f, 300.0f);
-	//}
-	//
-	////場所指定（２レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
-	//{
-	//	box_size = Vector2D(250.0f, 300.0f);
-	//}
-	////場所指定（３レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
-	//{
-	//	box_size = Vector2D(250.0f, 300.0f);
-	//}
-	////場所指定（４レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
-	//{
-	//	box_size = Vector2D(250.0f, 300.0f);
-	//}
-	////場所指定（５レーン）
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
-	//{
-	//	box_size = Vector2D(400.0f, 300.0f);
-	//}
-	//
+	//場所指定（１レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
+	{
+		attackflg2 = false;
+	}
+	
+	//場所指定（２レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
+	{
+		attackflg2 = false;
+	}
+	//場所指定（３レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
+	{
+		attackflg2 = false;
+	}
+	//場所指定（４レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
+	{
+		attackflg2 = false;
+	}
+	//場所指定（５レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
+	{
+		attackflg2 = false;
+	}
+	
 }
 
 
