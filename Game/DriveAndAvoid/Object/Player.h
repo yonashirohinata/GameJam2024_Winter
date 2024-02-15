@@ -41,10 +41,10 @@ public:
 	int GetBarrierCount()  const;		//バリアの枚数取得
 	bool IsBarrier()  const;			//バリア有効か？を取得
 	int IsVanish();						//透明化が有効か？を取得
+	void Acceleration();		//加速処理
 	
 private:
 	void Movement();			//移動処理
-	void Acceleration();		//加速処理
 	void Vanishment();			//透明化処理
 	void Damage();				//ダメージ処理
 };

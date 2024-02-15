@@ -100,6 +100,11 @@ eSceneType GameMainScene::Update()
 
 	//移動距離の更新
 	mileage += (int)player->GetSpeed() + 5;
+	//走行距離1000ごとにスピードがアップする
+	if ((mileage % 10000) == 0)
+	{
+		player->Acceleration();
+	}
 
 	//敵生成処理
 	if (mileage / 20 % 100 == 0)
@@ -120,11 +125,11 @@ eSceneType GameMainScene::Update()
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			if (item[i] == nullptr)
+			if (item[0] == nullptr)
 			{
 				int item_type = GetRand(3) % 3;
-				item[i] = new Item(item_type, item_image[item_type]);
-				item[i]->Initialize();
+				item[0] = new Item(item_type, item_image[item_type]);
+				item[0]->Initialize();
 				break;
 			}
 		}
