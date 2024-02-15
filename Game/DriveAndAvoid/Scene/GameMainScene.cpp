@@ -108,7 +108,7 @@ eSceneType GameMainScene::Update()
 	}
 
 	//“G¶¬ˆ—
-	if (mileage / 20 % 100 == 0)
+	if (mileage / 20 % 15 == 0)
 	{
 		for (int i = 0; i < 1; i++)
 		{
