@@ -4,25 +4,12 @@
 
 Cheak::Cheak(int type)
 {
-	switch (type)
-	{
-	case 0:
-		location = Vector2D(50.0f, 60.0f);
-		break;
-	case 1:
-		location = Vector2D(150.0f, 60.0f);
-		break;
-	case 2:
-		location = Vector2D(250.0f, 60.0f);
-		break;
-	case 3:
-		location = Vector2D(350.0f, 60.0f);
-		break;
-	case 4:
-		location = Vector2D(450.0f, 60.0f);
-		break;
-	}
-	
+	location = Vector2D(50.0f, 60.0f);
+	location2 = Vector2D(150.0f, 60.0f);
+	location3 = Vector2D(250.0f, 60.0f);
+	location4 = Vector2D(350.0f, 60.0f);
+	location5 = Vector2D(450.0f, 60.0f);
+	attackflg = true;
 	//当たり判定の設定
 	box_size = Vector2D(31.0f, 60.0f);
 	flg = false;
@@ -37,6 +24,8 @@ Cheak::~Cheak()
 
 void Cheak::Update(Vector2D vector2D)
 {
+	//ターゲット場所指定(大)
+	StrongTarget();
 	//場所指定（１レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != vector2D.x)
 	{
@@ -51,6 +40,14 @@ void Cheak::Update(Vector2D vector2D)
 	if (time > 300) {
 		time = 0;
 		flg = false;
+	}
+	//ダメージ範囲内にいるか
+	if (time > 50 && attackflg == false) {
+		box_size = Vector2D(31.0f, 300.0f);
+	}
+	if (time > 100 && attackflg == false ) {
+		box_size = Vector2D(31.0f, 60.0f);
+		attackflg = true;
 	}
 	//ダメージ範囲内にいるか
 	if (time > 150) {
@@ -82,4 +79,36 @@ Vector2D Cheak::GetLocation() const
 Vector2D Cheak::GetBoxSize() const
 {
 	return Vector2D();
+}
+
+//ボタンを押したときの範囲攻撃（大）
+void Cheak::StrongTarget()
+{
+	//場所指定（１レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
+	{
+		attackflg = false;
+	}
+	
+	//場所指定（２レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
+	{
+		attackflg = false;
+	}
+	//場所指定（３レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
+	{
+		attackflg = false;
+	}
+	//場所指定（４レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
+	{
+		attackflg = false;
+	}
+	//場所指定（５レーン）
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
+	{
+		attackflg = false;
+	}
+
 }
