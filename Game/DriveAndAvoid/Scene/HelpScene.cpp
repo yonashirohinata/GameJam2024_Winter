@@ -18,10 +18,17 @@ void HelpScene::Initialize()
 	//画像の読み込み
 	background_image = LoadGraph("Resource/images/help2.png");
 
+	//
+	select_se = LoadSoundMem("Resource/sounds/決定ボタンを押す23.mp3");
+
 	//エラーチェック
 	if (background_image == -1)
 	{
 		throw("Resource/images/Title.bmpがありません\n");
+	}
+	if (select_se == -1)
+	{
+		throw("Resource/sounds/決定ボタンを押す22.mp3がありません\n");
 	}
 }
 
@@ -31,6 +38,8 @@ eSceneType HelpScene::Update()
 	//Bボタンが押されたら、タイトルに戻る
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
+		PlaySoundMem(select_se, DX_PLAYTYPE_BACK, TRUE);
+
 		return eSceneType::E_TITLE;
 	}
 
