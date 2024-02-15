@@ -23,7 +23,7 @@ private:
 	Vector2D No_box_size;		//当たり判定の大きさ
 	int cursor;				//カーソルの選択
 	int time;				//待機時間
-	
+	int time2;				//待機時間
 	bool attackflg;			//ダメージ範囲内にいるか（１レーンのみ）
 	bool attackflg2;		//ダメージ範囲内にいるか（３レーン）
 	int Damage;
