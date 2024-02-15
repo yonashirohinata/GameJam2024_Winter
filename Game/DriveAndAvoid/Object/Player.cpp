@@ -43,12 +43,12 @@ void Player::Initialize()
 //更新処理
 void Player::Update()
 {
-	//操作不可状態であれば、自身を回復させる
+	//操作不可状態であれば、自身を回転させる
 	if (!is_active)
 	{
 		angle += DX_PI_F / 4.0f;
 		speed = 1.0f;
-		if (angle >= DX_PI_F * 6.0f)
+		if (angle >= DX_PI_F * 12.0f)
 		{
 			is_active = true;
 		}
@@ -210,13 +210,13 @@ void Player::Movement()
 	//十字移動処理
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_LEFT))
 	{
-		move += Vector2D(-5.0f, 0.0f);
+		move += Vector2D(-7.0f, 0.0f);
 		angle = -DX_PI_F / 18;
 	}
 
 	if (InputControl::GetButton(XINPUT_BUTTON_DPAD_RIGHT))
 	{
-		move += Vector2D(5.0f, 0.0f);
+		move += Vector2D(7.0f, 0.0f);
 		angle = DX_PI_F / 18;
 	}
 
