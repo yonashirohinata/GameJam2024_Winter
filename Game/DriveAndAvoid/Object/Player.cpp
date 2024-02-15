@@ -4,7 +4,7 @@
 
 Player::Player() : is_active(false), image(NULL), location(0.0f), box_size(0.0f), angle(0.0f), 
 speed(0.0f), hp(0.0f), fuel(0.0f), barrier_count(0), barrier(nullptr),player_alpha(0),alpha_flg(0)
-,vanish_flg(nullptr),vanish_timer(0)
+,vanish_flg(nullptr),vanish_timer(0),bright_red(0),bright_green(0),bright_blue(0)
 {
 
 }
@@ -30,6 +30,10 @@ void Player::Initialize()
 	vanish_flg = FALSE;
 	vanish_timer = 0;
 
+	bright_red = 255;
+	bright_green = 255;
+	bright_blue = 255;
+
 	//画像の読み込み
 	image = LoadGraph("Resource/images/car1pol.bmp");
 
@@ -48,6 +52,9 @@ void Player::Update()
 	{
 		angle += DX_PI_F / 4.0f;
 		speed = 1.0f;
+		bright_red = 155;
+		bright_green = 15;
+		bright_blue = 5;
 		if (angle >= DX_PI_F * 12.0f)
 		{
 			is_active = true;
@@ -96,8 +103,11 @@ void Player::Draw()
 {
 	//透明度設定
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, player_alpha);
+	if(!is_active)
+	SetDrawBright(bright_red, bright_green,bright_blue);
 	//プレイヤー画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.0, angle, image, TRUE);
+	SetDrawBright(255, 255, 255);
 	//透明度を元に戻す
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 
@@ -242,7 +252,7 @@ void Player::Movement()
 //加減速処理
 void Player::Acceleration()
 {
-	if (speed < 15.f)
+	if (speed < 10.f)
 	{
 		speed += 1.f;
 	}

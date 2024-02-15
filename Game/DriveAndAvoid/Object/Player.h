@@ -23,6 +23,10 @@ private:
 	int player_alpha;		//プレイヤーの透明度
 	int barrier_count;		//バリアの枚数
 	Barrier* barrier;		//バリア
+
+	int bright_red;
+	int bright_blue;
+	int bright_green;
 	
 public:
 	Player();

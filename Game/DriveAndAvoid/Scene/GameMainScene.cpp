@@ -173,7 +173,7 @@ eSceneType GameMainScene::Update()
 			if (IsHitCheck(player, enemy[i]))
 			{
 				player->SetActive(false);
-				player->ControlHp(-20.0f);
+				player->ControlHp(-25.0f);
 				enemy[i]->Finalize();
 				delete enemy[i];
 				enemy[i] = nullptr;
@@ -199,6 +199,12 @@ eSceneType GameMainScene::Update()
 			//“–‚½‚è”»’è‚ÌŠm”F
 			if (IsHitCheck_item(player, item[i]))
 			{
+				//‘Ì—Í‚Æ”R—¿‚Ì“¯Žž‰ñ•œˆ—
+				if (item[i]->GetType() == 0 && (player->GetFuel() < 20000 || player->GetHp() < 100))
+				{
+					player->ControlFuel(1500);
+					player->ControlHp(10);
+				}
 				//‘Ì—Í‚Ì‰ñ•œˆ—
 				if (item[i]->GetType() == 1 && player->GetFuel() < 20000)
 				{
@@ -207,7 +213,7 @@ eSceneType GameMainScene::Update()
 				//”R—¿‚Ì‰ñ•œˆ—
 				if (item[i]->GetType() == 2 && player->GetHp() < 100)
 				{
-					player->ControlFuel(200);
+					player->ControlFuel(2500);
 				}
 				item_count[item[i]->GetType()] ++;
 				item[i]->Finalize();
