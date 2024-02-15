@@ -2,7 +2,7 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-TitleScene::TitleScene() : background_image(NULL), start_image(NULL), help_image(NULL), end_image(NULL), start_select_image(NULL), help_select_image(NULL), end_select_image(NULL), cursor_image(NULL), menu_cursor(0)
+TitleScene::TitleScene() : background_image(NULL), start_image(NULL), help_image(NULL), end_image(NULL), start_select_image(NULL), help_select_image(NULL), end_select_image(NULL), cursor_image(NULL), choose_se(NULL), select_se(NULL), title_bgm(NULL), menu_cursor(0)
 {
 
 }
@@ -24,6 +24,11 @@ void TitleScene::Initialize()
 	help_select_image = LoadGraph("Resource/images/help_yellow_m.bmp");
 	end_select_image = LoadGraph("Resource/images/end_yellow_m.bmp");
 	cursor_image = LoadGraph("Resource/images/cone.bmp");
+
+	//SEの読み込み
+	title_bgm = LoadSoundMem("Resource/sounds/runners_high.mp3");
+	choose_se = LoadSoundMem("Resource/sounds/決定ボタンを押す22.mp3");
+	select_se = LoadSoundMem("Resource/sounds/決定ボタンを押す23.mp3");
 
 	//エラーチェック
 	if (background_image == -1)
@@ -58,11 +63,27 @@ void TitleScene::Initialize()
 	{
 		throw("Resource/images/end_yellow_m.bmpがありません\n");
 	}
+	if (choose_se == -1)
+	{
+		throw("Resource/sounds/決定ボタンを押す22.mp3がありません\n");
+	}
+	if (select_se == -1)
+	{
+		throw("Resource/sounds/決定ボタンを押す22.mp3がありません\n");
+	}
+	if (title_bgm == -1)
+	{
+		throw("Resource/sounds/runners_high.mp3がありません\n");
+	}
+	ChangeVolumeSoundMem(255 * 45 / 100, title_bgm);
+	PlaySoundMem(title_bgm, DX_PLAYTYPE_BACK, TRUE);
+
 }
 
 //更新処理
 eSceneType TitleScene::Update()
 {
+	
 	//カーソル下移動
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_DOWN)|| InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_DOWN))
 	{
@@ -85,9 +106,17 @@ eSceneType TitleScene::Update()
 		}
 	}
 
+	//効果音処理
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_DOWN) || InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_UP))
+	{
+		PlaySoundMem(choose_se, DX_PLAYTYPE_BACK, TRUE);
+	}
+
 	//カーソル決定（決定した画面に遷移する）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B) || InputControl::GetButtonDown2(XINPUT_BUTTON_B))
 	{
+		PlaySoundMem(select_se, DX_PLAYTYPE_BACK, TRUE);
+
 		switch (menu_cursor)
 		{
 		case 0:
@@ -107,8 +136,6 @@ eSceneType TitleScene::Update()
 	//現在のシーンタイプを返す
 	return GetNowScene();
 }
-
-//カーソルY座標位置情報取得
 
 //描画処理
 void TitleScene::Draw() const
@@ -149,11 +176,17 @@ void TitleScene::Draw() const
 
 	//カーソル画像の描画
 	DrawRotaGraph(90, 220 + menu_cursor * 40, 0.7, DX_PI / 2.0, cursor_image, TRUE);
+
 }
+
+
 
 //終了時処理
 void TitleScene::Finalize()
 {
+	//
+	StopSoundMem(title_bgm);
+
 	//読み込んだ画像の削除
 	DeleteGraph(background_image);
 	DeleteGraph(cursor_image);
@@ -163,6 +196,7 @@ void TitleScene::Finalize()
 	DeleteGraph(start_select_image);
 	DeleteGraph(help_select_image);
 	DeleteGraph(end_select_image);
+	DeleteSoundMem(choose_se);
 }
 
 //現在のシーン情報を取得
