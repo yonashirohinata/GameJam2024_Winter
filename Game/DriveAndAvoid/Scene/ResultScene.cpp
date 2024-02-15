@@ -92,7 +92,7 @@ void ResultScene::Draw() const
 	//}
 	SetFontSize(32);
 	DrawString(180, 240, "ëñçsãóó£", GetColor(0, 0, 0));
-	DrawFormatString(180, 240, 0xFFFFFF, "         =%6d", score);
+	DrawFormatString(180, 240, 0xFFFFFF, "         =%6d", mileage);
 
 }
 
