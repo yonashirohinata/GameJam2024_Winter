@@ -22,7 +22,7 @@ void Player::Initialize()
 	box_size = Vector2D(31.0f, 60.0f);
 	angle = 0.0f;
 	speed = 5.0f;
-	hp = 1000;
+	hp = 100;
 	fuel = 20000;
 	barrier_count = 3;
 	player_alpha = 255;
@@ -127,10 +127,23 @@ void Player::SetActive(bool flg)
 	this->is_active = flg;
 }
 
-//体力減少処理
-void Player::DecreaseHp(float value)
+//体力管理処理
+void Player::ControlHp(float value)
 {
 	this->hp += value;
+	if (hp > MAX_HP)
+	{
+		hp = MAX_HP;
+	}
+}
+
+void Player::ControlFuel(float value)
+{
+	this->fuel += value;
+	if (fuel > MAX_FUEL)
+	{
+		fuel = MAX_FUEL;
+	}
 }
 
 //位置情報取得処理
@@ -229,20 +242,9 @@ void Player::Movement()
 //加減速処理
 void Player::Acceleration()
 {
-	////LBボタンが押されたら、減速する
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER) && speed > 1.0f)
-	//{
-	//	speed -= 1.0f;
-	//}
-
-	////RBボタンが押されたら、加速する
-	//if (InputControl::GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER) && speed < 10.0f)
-	//{
-	//	speed += 1.0f;
-	//}
-	if (speed < 10.f)
+	if (speed < 15.f)
 	{
-		speed += 0.1f;
+		speed += 1.f;
 	}
 }
 

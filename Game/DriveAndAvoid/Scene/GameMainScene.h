@@ -40,6 +40,8 @@ private:
 	//ハイスコア読み込み処理
 	void ReadHighScore();
 
+	void Recover();
+
 	//当たり判定
 	bool IsHitCheck(Player* p, Enemy* e);
 

@@ -4,7 +4,8 @@
 #include <math.h>
 
 
-GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), mileage(0), player(nullptr), enemy(nullptr), item(nullptr)
+GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), 
+mileage(0), player(nullptr), enemy(nullptr), item(nullptr)
 
 {
 	for (int i = 0; i < 3; i++)
@@ -99,9 +100,9 @@ eSceneType GameMainScene::Update()
 	
 
 	//移動距離の更新
-	mileage += (int)player->GetSpeed() + 5;
+	mileage += (int)player->GetSpeed() + 2;
 	//走行距離1000ごとにスピードがアップする
-	if ((mileage % 10000) == 0)
+	if ((mileage/10) % 200 == 0)
 	{
 		player->Acceleration();
 	}
@@ -146,7 +147,7 @@ eSceneType GameMainScene::Update()
 			if (IsHitCheck2(player, cheak[i]))
 			{
 				player->SetActive(false);
-				player->DecreaseHp(-50.0f);
+				player->ControlHp(-10.0f);
 
 			}
 		}
@@ -172,7 +173,7 @@ eSceneType GameMainScene::Update()
 			if (IsHitCheck(player, enemy[i]))
 			{
 				player->SetActive(false);
-				player->DecreaseHp(-50.0f);
+				player->ControlHp(-20.0f);
 				enemy[i]->Finalize();
 				delete enemy[i];
 				enemy[i] = nullptr;
@@ -198,9 +199,17 @@ eSceneType GameMainScene::Update()
 			//当たり判定の確認
 			if (IsHitCheck_item(player, item[i]))
 			{
+				//体力の回復処理
+				if (item[i]->GetType() == 1 && player->GetFuel() < 20000)
+				{
+					player->ControlHp(15);
+				}
+				//燃料の回復処理
+				if (item[i]->GetType() == 2 && player->GetHp() < 100)
+				{
+					player->ControlFuel(200);
+				}
 				item_count[item[i]->GetType()] ++;
-				/*player->SetActive(false);*/
-				/*player->DecreaseHp(-50.0f);*/
 				item[i]->Finalize();
 				delete item[i];
 				item[i] = nullptr;
@@ -285,7 +294,7 @@ void GameMainScene::Draw() const
 	fx = 510.0f;
 	fy = 430.0f;
 	DrawFormatStringF(fx, fy, GetColor(0, 0, 0), "PLAYER HP");
-	DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / 1000), fy + 40.0f, GetColor(255, 0, 0), TRUE);
+	DrawBoxAA(fx, fy + 20.0f, fx + (player->GetHp() * 100 / 100), fy + 40.0f, GetColor(255, 0, 0), TRUE);
 	DrawBoxAA(fx, fy + 20.0f, fx + 100.0f, fy + 40.0f, GetColor(0, 0, 0), FALSE);
 
 
@@ -373,6 +382,10 @@ void GameMainScene::ReadHighScore()
 	high_score = data.GetScore(0);
 
 	data.Finalize();
+}
+
+void GameMainScene::Recover()
+{
 }
 
 //当たり判定処理（プレイヤーと敵）

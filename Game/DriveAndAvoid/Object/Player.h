@@ -3,6 +3,9 @@
 #include "../Utility/Vector2D.h"
 #include "Barrier.h"
 
+#define MAX_FUEL 20000
+#define MAX_HP 100
+
 class Player
 {
 private:
@@ -32,7 +35,8 @@ public:
 
 public:
 	void SetActive(bool flg);			//有効フラグ設定
-	void DecreaseHp(float value);		//体力減少処理
+	void ControlHp(float value);		//体力減少処理
+	void ControlFuel(float value);		//燃料管理処理
 	Vector2D GetLocation() const;		//位置座標取得
 	Vector2D GetBoxSize() const;		//当たり判定の大きさ取得
 	float GetSpeed() const;				//速さ取得処理
@@ -41,7 +45,7 @@ public:
 	int GetBarrierCount()  const;		//バリアの枚数取得
 	bool IsBarrier()  const;			//バリア有効か？を取得
 	int IsVanish();						//透明化が有効か？を取得
-	void Acceleration();		//加速処理
+	void Acceleration();				//加速処理
 	
 private:
 	void Movement();			//移動処理
