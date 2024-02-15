@@ -5,7 +5,7 @@
 
 
 GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), 
-mileage(0), player(nullptr), enemy(nullptr), item(nullptr)
+mileage(0), player(nullptr), enemy(nullptr), item(nullptr),cut_in(0)
 
 {
 	for (int i = 0; i < 3; i++)
@@ -34,10 +34,16 @@ void GameMainScene::Initialize()
 	car_engine_image = LoadGraph("Resource/images/car_engine.png");
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
 	tool_box_image = LoadGraph("Resource/images/tool_box.png");
+	speed_up_image = LoadGraph("Resource/images/SpeedUP.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
 	/*car_engine_image = LoadGraph("Resource/images/car_engine.png");
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
 	tool_box_image = LoadGraph("Resource/images/tool_box.png");*/
+
+	cut_in = FALSE;
+	cut_time = 0;
+	speed_direction.x = -500;
+	speed_direction.y = 100;
 
 	//エラーチェック
 	if (back_ground == -1)
@@ -63,6 +69,10 @@ void GameMainScene::Initialize()
 	if (tool_box_image == -1)
 	{
 		throw("Resource/images/tool_box.pngがありません\n");
+	}
+	if (speed_up_image == -1)
+	{
+		throw("Resource/images/SpeedUP.pngがありません\n");
 	}
 	//オブジェクトの生成
 	player = new Player;
@@ -102,9 +112,10 @@ eSceneType GameMainScene::Update()
 	//移動距離の更新
 	mileage += (int)player->GetSpeed() + 2;
 	//走行距離1000ごとにスピードがアップする
-	if ((mileage/10) % 200 == 0)
+	if ((mileage) % 1000 == 0)
 	{
 		player->Acceleration();
+		cut_in = TRUE;
 	}
 
 	//敵生成処理
@@ -122,7 +133,7 @@ eSceneType GameMainScene::Update()
 		}
 	}
 	//アイテム生成処理
-	if (mileage / 40 % 100 == 0)
+	if (mileage / 40 % 65 == 0)
 	{
 		for (int i = 0; i < 10; i++)
 		{
@@ -229,6 +240,22 @@ eSceneType GameMainScene::Update()
 		return eSceneType::E_RESULT;
 	}
 
+	if (cut_in == TRUE)
+	{
+		cut_time ++;
+		if (speed_direction.x <= 0 && cut_time <= 200)
+		{
+			speed_direction.x = 0;
+		}
+		if (cut_time >= 200 && speed_direction.x >= 0) 
+		{
+			speed_direction.y += 100;
+			if (speed_direction.x >= 600)
+			{
+				cut_in = FALSE;
+			}
+		}
+	}
 	return GetNowScene();
 }
 
@@ -258,6 +285,11 @@ void GameMainScene::Draw() const
 
 	//プレイヤーの描画
 	player->Draw();
+
+	if (cut_in == TRUE)
+	{
+		DrawGraph(speed_direction.x, speed_direction.y, speed_up_image, TRUE);
+	}
 
 	//UIの描画
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
@@ -408,7 +440,6 @@ bool GameMainScene::IsHitCheck(Player* p, Enemy* e)
 	{
 		return false;
 	}
-
 	
 	//位置情報の差分を取得
 	Vector2D diff_location = p->GetLocation() - e->GetLocation();
@@ -433,7 +464,6 @@ bool GameMainScene::IsHitCheck2(Player* p, Cheak* e)
 	{
 		return false;
 	}
-
 
 	//位置情報の差分を取得
 	Vector2D diff_location = p->GetLocation() - e->GetLocation();

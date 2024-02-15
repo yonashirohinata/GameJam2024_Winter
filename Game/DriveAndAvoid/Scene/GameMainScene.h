@@ -5,6 +5,12 @@
 #include "../Object/Enemy.h"
 #include "../Object/Item.h"
 #include "../Object/Cheak.h"
+
+struct SpeedUp
+{
+	float x;
+	float y;
+};
 class GameMainScene : public SceneBase
 {
 private:
@@ -14,16 +20,20 @@ private:
 	int car_engine_image;	//加速アイテム画像
 	int oil_tank_image;		//燃料アイテム画像
 	int tool_box_image;		//HP回復アイテム画像
+	int speed_up_image;		//スピードアップ時の演出画像
 	int mileage;			//走行距離
 	int enemy_image[3];		//敵画像
 	int enemy_count[3];		//通りすぎた敵カウント
 	int item_image[3];
 	int item_count[3];
+	int cut_in;
+	int cut_time;
 	Player* player;			//プレイヤー
 	Enemy** enemy;			//敵
 	Item** item;             //アイテム
 	Cheak* cheak[5];			//判定
 
+	SpeedUp speed_direction;
 
 public:
 	GameMainScene();
