@@ -15,8 +15,8 @@ Enemy::~Enemy()
 //初期化処理
 void Enemy::Initialize()
 {
-	//出現させるX座標パターンを取得
-	float random_x = (float)(GetRand(4) * 105 + 40);
+	////出現させるX座標パターンを取得
+	//float random_x = (float)(GetRand(4) * 105 + 40);
 	//生成位置の設定
 	location = Vector2D(250.0f,60.0f);
 	//当たり判定の設定
