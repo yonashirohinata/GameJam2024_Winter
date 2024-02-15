@@ -72,11 +72,11 @@ void ResultScene::Draw() const
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
 
 	SetFontSize(32);
-	if (hp <= 0.0f || fuel <= 0.0f && mileage < 5000)
+	if ((hp <= 0.0f || fuel <= 0.0f) && score / 10 < 3500)
 	{
 		DrawString(200, 160, "プレイヤー2WIN", GetColor(204, 0, 0));
 	}
-	else if(hp <= 0.0f || fuel <= 0.0f && mileage >= 5000)
+	else if((hp <= 0.0f || fuel <= 0.0f) && score / 10 >= 3500)
 	{
 		DrawString(200, 160, "プレイヤー1WIN", GetColor(204, 0, 0));
 	}
@@ -92,7 +92,8 @@ void ResultScene::Draw() const
 	//}
 	SetFontSize(32);
 	DrawString(180, 240, "走行距離", GetColor(0, 0, 0));
-	DrawFormatString(180, 240, 0xFFFFFF, "         =%6d", mileage);
+
+	DrawFormatString(180, 240, 0xFFFFFF, "         =%6d", score / 10);
 
 }
 

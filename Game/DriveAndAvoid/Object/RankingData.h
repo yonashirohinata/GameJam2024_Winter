@@ -28,7 +28,9 @@ public:
 	const char* GetName(int value) const;
 
 	float GetFuel(int value) const;
+
 	float GetHp(int value) const;
+
 	float GetMileage(int value) const;
 
 

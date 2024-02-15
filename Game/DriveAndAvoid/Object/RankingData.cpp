@@ -8,13 +8,13 @@ RankingData::RankingData()
 	{
 		score[i] = NULL;
 		rank[i] = NULL;
-		fuel[i] = NULL;
-		hp[i] = NULL;
-		mileage[i] = NULL;
 		for (int j = 0; j < 15; j++)
 		{
 			name[i][j] = '\0';
 		}
+		fuel[i] = NULL;
+		hp[i] = NULL;
+		mileage[i] = NULL;
 	}
 }
 
@@ -90,10 +90,12 @@ float RankingData::GetFuel(int value) const
 {
 	return fuel[value];
 }
+
 float RankingData::GetHp(int value) const
 {
 	return hp[value];
 }
+
 float RankingData::GetMileage(int value) const
 {
 	return mileage[value];

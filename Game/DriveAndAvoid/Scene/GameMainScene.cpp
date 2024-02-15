@@ -219,7 +219,6 @@ eSceneType GameMainScene::Update()
 			//画面外に行ったら、アイテムを削除してスコア加算
 			if (item[i]->GetLocation().y >= 640.0f)
 			{
-				item_count[item[i]->GetType()] ++;
 				item[i]->Finalize();
 				delete item[i];
 				item[i] = nullptr;
