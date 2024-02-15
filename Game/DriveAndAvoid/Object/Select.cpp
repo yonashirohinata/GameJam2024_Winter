@@ -1,45 +1,45 @@
-#include "Cheak.h"
+#include "Select.h"
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-Cheak::Cheak(int type)
+Select::Select()
 {
-	switch (type)
+	for (int i = 0; i < 4; i++)
 	{
-	case 0:
-		location = Vector2D(50.0f, 60.0f);
-		break;
-	case 1:
-		location = Vector2D(150.0f, 60.0f);
-		break;
-	case 2:
-		location = Vector2D(250.0f, 60.0f);
-		break;
-	case 3:
-		location = Vector2D(350.0f, 60.0f);
-		break;
-	case 4:
-		location = Vector2D(450.0f, 60.0f);
-		break;
+		/*lean[i] = ;*/
 	}
+}
+
+Select::~Select()
+{
+
+}
+
+//初期化処理
+void Select::Initialize()
+{
 	
+	//生成位置の設定
+	location = Vector2D(250.0f, 60.0f);
+	//当たり判定の設定
+	box_size = Vector2D(31.0f, 60.0f);
+
 	//当たり判定の設定
 	box_size = Vector2D(31.0f, 60.0f);
 	flg = false;
 	time = 0;
 	/*damage = LoadGraph("Resource/images/dama.png");*/
-}
-
-Cheak::~Cheak()
-{
 
 }
 
-void Cheak::Update(Vector2D vector2D)
+
+void Select::Update(Vector2D vector2D)
 {
+
 	//場所指定（１レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != vector2D.x)
 	{
+
 		box_size = Vector2D(31.0f, 300.0f);
 		flg = true;
 	}
@@ -67,19 +67,19 @@ void Cheak::Update(Vector2D vector2D)
 	}*/
 }
 
-void Cheak::Draw() {
+void Select::Draw() {
 	/*DrawBox(location.x - 15, location.y, location.x + 15, location.y + 60, 0xffffff, false);*/
 	/*if (time > 150) {
 		DrawRotaGraphF(location.x, location.y + 200, 2.0, 0.0, damage, TRUE);
 	}*/
 }
 //当たり判定代の移動場所
-Vector2D Cheak::GetLocation() const
+Vector2D Select::GetLocation() const
 {
 	return Vector2D();
 }
 //当たり判定大のボックス
-Vector2D Cheak::GetBoxSize() const
+Vector2D Select::GetBoxSize() const
 {
 	return Vector2D();
 }

@@ -200,32 +200,32 @@ void Enemy::WeakTarget()
 //ボタンを押したときの範囲攻撃（大）
 void Enemy::StrongTarget()
 {
-	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
-	{
-		attackflg2 = false;
-	}
-	
-	//場所指定（２レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（３レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（４レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（５レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
-	{
-		attackflg2 = false;
-	}
+	////場所指定（１レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	//
+	////場所指定（２レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（３レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（４レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（５レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
+	//{
+	//	attackflg2 = false;
+	//}
 	
 }
 
