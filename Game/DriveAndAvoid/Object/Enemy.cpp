@@ -15,8 +15,8 @@ Enemy::~Enemy()
 //初期化処理
 void Enemy::Initialize()
 {
-	//出現させるX座標パターンを取得
-	float random_x = (float)(GetRand(4) * 105 + 40);
+	////出現させるX座標パターンを取得
+	//float random_x = (float)(GetRand(4) * 105 + 40);
 	//生成位置の設定
 	location = Vector2D(250.0f,60.0f);
 	//当たり判定の設定
@@ -200,32 +200,32 @@ void Enemy::WeakTarget()
 //ボタンを押したときの範囲攻撃（大）
 void Enemy::StrongTarget()
 {
-	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
-	{
-		attackflg2 = false;
-	}
-	
-	//場所指定（２レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（３レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（４レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
-	{
-		attackflg2 = false;
-	}
-	//場所指定（５レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
-	{
-		attackflg2 = false;
-	}
+	////場所指定（１レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	//
+	////場所指定（２レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（３レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（４レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
+	//{
+	//	attackflg2 = false;
+	//}
+	////場所指定（５レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
+	//{
+	//	attackflg2 = false;
+	//}
 	
 }
 

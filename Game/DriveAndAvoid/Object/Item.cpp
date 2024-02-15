@@ -17,11 +17,11 @@ void Item::Initialize()
 {   //出現させるX座標パターンを取得
 	float random_x = (float)(GetRand(4) * 105 + 40);
 	//生成位置の設定
-	location = Vector2D(250.0f, 60.0f);
+	location = Vector2D(random_x, 60.0f);
 	//当たり判定の設定
 	box_size = Vector2D(31.0f, 60.0f);
 	//速さの設定
-	item_speed = (float)(this->type * 2);
+	item_speed = /*(float)(this->type * 3)*/6;
 	
 	
 	
@@ -39,6 +39,7 @@ void Item::Update(float speed)
 void Item::Draw() const
 {
 	DrawGraphF(location.x,location.y, image, TRUE);
+	DrawFormatString(location.x, location.y, 0xFFFFFF, "%d", image);
 	/*DrawGraphF(location.x,location.y, oil_tank, TRUE);
 	DrawGraphF(location.x,location.y, tool_box, TRUE);*/
 }
