@@ -31,6 +31,7 @@ void Enemy::Initialize()
 	//速さの設定
 	speed = (float)(this->type * 3);
 	time = 0; //待機時間
+	time2 = 0;
 	flg = false;
 	//当たったか判定（１レーンのみ）
 	attackflg = true;
@@ -60,10 +61,12 @@ void Enemy::Update(float speed)
 	Timer();
 	if (flg == true) {
 		time++;
+		time2++;
 	}
 	
-	if (time > 200) {
+	if (time > 150) {
 		time = 0;
+		time2 = 0;
 		flg = false;
 		location1 = Vector2D(50.0f, 60.0f);
 		location2 = Vector2D(150.0f, 60.0f);
@@ -71,12 +74,13 @@ void Enemy::Update(float speed)
 		location4 = Vector2D(350.0f, 60.0f);
 		location5 = Vector2D(450.0f, 60.0f);
 	}
+	
 	//ダメージ範囲内にいるか
 	if (time > 50 && attackflg == false ) {
 		box_size = Vector2D(31.0f, 300.0f);	
 	}
-	if (time > 50 && attackflg2 == false) {
-		box_size = Vector2D(150.0f, 300.0f);
+	if (time2 > 50 && attackflg2 == false) {
+		box_size = Vector2D(100.0f, 300.0f);
 	}
 	if (time > 100 && attackflg == false || attackflg2 == false) {
 		box_size = Vector2D(31.0f, 60.0f);
@@ -100,7 +104,7 @@ void Enemy::Draw() const
 		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, damage, TRUE);
 	}
-	if (time > 70 && attackflg2 == false) {
+	if (time2 > 70 && attackflg2 == false) {
 		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
 		DrawRotaGraphF(location.x, location.y + 200, 3.0, 0.0, damage, TRUE);
 	}
@@ -212,7 +216,7 @@ void Enemy::StrongTarget()
 	//場所指定（１レーン）
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 50.0f)
 	{
-		location = NULL;
+		location1 = NULL;
 		attackflg2 = false;
 	}
 
