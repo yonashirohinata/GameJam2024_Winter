@@ -61,9 +61,6 @@ void Player::Update()
 	//移動処理
 	Movement();
 
-	//加減速処理
-	Acceleration();
-
 	//透明化処理
 	Vanishment();
 
@@ -232,16 +229,20 @@ void Player::Movement()
 //加減速処理
 void Player::Acceleration()
 {
-	//LBボタンが押されたら、減速する
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER) && speed > 1.0f)
-	{
-		speed -= 1.0f;
-	}
+	////LBボタンが押されたら、減速する
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_LEFT_SHOULDER) && speed > 1.0f)
+	//{
+	//	speed -= 1.0f;
+	//}
 
-	//RBボタンが押されたら、加速する
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER) && speed < 10.0f)
+	////RBボタンが押されたら、加速する
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_RIGHT_SHOULDER) && speed < 10.0f)
+	//{
+	//	speed += 1.0f;
+	//}
+	if (speed < 10.f)
 	{
-		speed += 1.0f;
+		speed += 0.1f;
 	}
 }
 
