@@ -8,6 +8,9 @@ RankingData::RankingData()
 	{
 		score[i] = NULL;
 		rank[i] = NULL;
+		fuel[i] = NULL;
+		hp[i] = NULL;
+		mileage[i] = NULL;
 		for (int j = 0; j < 15; j++)
 		{
 			name[i][j] = '\0';
@@ -38,7 +41,7 @@ void RankingData::Initialize()
 	//対象ファイルから読み込む
 	for (int i = 0; i < 5; i++)
 	{
-		fscanf_s(fp, "%6d,%2d,%[^,],\n", &score[i], &rank[i], name[i], 15);
+		fscanf_s(fp, "%6d,%2d,%[^,],%f,%f,%f,\n", &score[i], &rank[i], &name[i], 15, &fuel[i], &hp[i], &mileage[i]);
 	}
 
 	//ファイルクローズ
@@ -47,7 +50,7 @@ void RankingData::Initialize()
 	//末尾データの設定
 	score[5] = 0;
 	rank[5] = 0;
-	name[5][0] = '\n';
+	name[5][0] = '\0';
 }
 
 //終了処理
@@ -81,6 +84,19 @@ int RankingData::GetRank(int value) const
 const char* RankingData::GetName(int value) const
 {
 	return name[value];
+}
+
+float RankingData::GetFuel(int value) const
+{
+	return fuel[value];
+}
+float RankingData::GetHp(int value) const
+{
+	return hp[value];
+}
+float RankingData::GetMileage(int value) const
+{
+	return mileage[value];
 }
 
 //データ入れ替え処理
@@ -136,7 +152,7 @@ void RankingData::SortData()
 	//対象ファイルに書き込み
 	for (int i = 0; i < 5; i++)
 	{
-		fprintf(fp, "%d,%d,%s,\n", score[i], rank[i], name[i]);
+		fprintf(fp, "%d,%d,%s,%f,%f,%f,\n", score[i], rank[i], name[i], fuel[i], hp[i], mileage[i]);
 	}
 
 	//ファイルクローズ

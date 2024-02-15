@@ -6,6 +6,9 @@ private:
 	int score[6];			//スコアデータ
 	int rank[6];			//ランクデータ
 	char name[6][15];		//名前データ
+	float fuel[6];
+	float hp[6];
+	float mileage[6];
 
 public:
 	RankingData();
@@ -23,6 +26,11 @@ public:
 	int GetRank(int value) const;
 	//名前取得処理
 	const char* GetName(int value) const;
+
+	float GetFuel(int value) const;
+	float GetHp(int value) const;
+	float GetMileage(int value) const;
+
 
 private:
 	//データ入れ替え処理

@@ -3,7 +3,7 @@
 #include "../Utility/InputControl.h"
 #include "DxLib.h"
 
-ResultScene::ResultScene() : back_ground(NULL), score(0)
+ResultScene::ResultScene() : back_ground(NULL), player_win_se(NULL), score(0), fuel(0), hp(0), mileage(0)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -24,6 +24,8 @@ void ResultScene::Initialize()
 	back_ground = LoadGraph("Resource/images/back.bmp");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
 
+	player_win_se = LoadSoundMem("Resource/sounds/ドンドンパフパフ.mp3");
+
 	//エラーチェック
 	if (back_ground == -1)
 	{
@@ -33,9 +35,16 @@ void ResultScene::Initialize()
 	{
 		throw("Resource/images/car.bmpがありません\n");
 	}
+	if (player_win_se == -1)
+	{
+		throw("Resource/sounds/ドンドンパフパフ.mp3がありません\n");
+	}
 
 	//ゲーム結果の読み込み
 	ReadResultData();
+
+	PlaySoundMem(player_win_se, DX_PLAYTYPE_BACK, TRUE);
+
 }
 
 //更新処理
@@ -44,7 +53,7 @@ eSceneType ResultScene::Update()
 	//Bボタンでランキングに遷移する
 	if (InputControl::GetButtonDown(XINPUT_BUTTON_B))
 	{
-		return eSceneType::E_RANKING_INPUT;
+		return eSceneType::E_TITLE;
 	}
 
 	return GetNowScene();
@@ -63,20 +72,28 @@ void ResultScene::Draw() const
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
 
 	SetFontSize(32);
-	//DrawString(220, 170, "ゲームオーバー", GetColor(204, 0, 0));
-	DrawString(200, 160, "プレイヤーWIN", GetColor(204, 0, 0));
+	if (hp <= 0.0f || fuel <= 0.0f && mileage < 5000)
+	{
+		DrawString(200, 160, "プレイヤー2WIN", GetColor(204, 0, 0));
+	}
+	else if(hp <= 0.0f || fuel <= 0.0f && mileage >= 5000)
+	{
+		DrawString(200, 160, "プレイヤー1WIN", GetColor(204, 0, 0));
+	}
 	//↓if文で表示させる妨害側のやつ
 	//if(設定された基準値 > score || player->GetHp() < 0.0f)
 	//DrawString(200, 160, "妨害側WIN", GetColor(204, 0, 0));
 	SetFontSize(16);
-	DrawString(180, 200, "走行距離     ", GetColor(0, 0, 0));
-	for (int i = 0; i < 3; i++)
-	{
-		DrawRotaGraph(230, 230 + (i * 20), 0.3f, DX_PI_F / 2, enemy_image[i], TRUE);
-		DrawFormatString(260, 220 + (i * 21), GetColor(255, 255, 255), "%6d x %4d=%6d", enemy_count[i], (i + 1) * 50, (i + 1) * 50 * enemy_count[i]);
-	}
-	DrawString(180, 290, "スコア", GetColor(0, 0, 0));
-	DrawFormatString(180, 290, 0xFFFFFF, "         =%6d", score);
+	//DrawString(180, 200, "走行距離     ", GetColor(0, 0, 0));
+	//for (int i = 0; i < 3; i++)
+	//{
+	//	DrawRotaGraph(230, 230 + (i * 20), 0.3f, DX_PI_F / 2, enemy_image[i], TRUE);
+	//	DrawFormatString(260, 220 + (i * 21), GetColor(255, 255, 255), "%6d x %4d=%6d", enemy_count[i], (i + 1) * 50, (i + 1) * 50 * enemy_count[i]);
+	//}
+	SetFontSize(32);
+	DrawString(180, 240, "走行距離", GetColor(0, 0, 0));
+	DrawFormatString(180, 240, 0xFFFFFF, "         =%6d", score);
+
 }
 
 //終了時処理
@@ -118,6 +135,10 @@ void ResultScene::ReadResultData()
 	{
 		fscanf_s(fp, "%6d,\n", &enemy_count[i]);
 	}
+
+	fscanf_s(fp, "%d,\n", &fuel);
+	fscanf_s(fp, "%d,\n", &hp);
+	fscanf_s(fp, "%d,\n", &mileage);
 
 	//ファイルクローズ
 	fclose(fp);
