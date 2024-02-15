@@ -39,7 +39,6 @@ void Item::Update(float speed)
 void Item::Draw() const
 {
 	DrawGraphF(location.x,location.y, image, TRUE);
-	DrawFormatString(location.x, location.y, 0xFFFFFF, "%d", image);
 	/*DrawGraphF(location.x,location.y, oil_tank, TRUE);
 	DrawGraphF(location.x,location.y, tool_box, TRUE);*/
 }
