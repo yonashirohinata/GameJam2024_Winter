@@ -19,6 +19,11 @@ private:
 	int enemy_count[3];		//通りすぎた敵カウント
 	int item_image[3];
 	int item_count[3];
+	
+	int main_bgm;
+	int heal_se;
+	int damage_se;
+
 	Player* player;			//プレイヤー
 	Enemy** enemy;			//敵
 	Item** item;             //アイテム

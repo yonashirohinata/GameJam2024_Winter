@@ -35,9 +35,10 @@ void GameMainScene::Initialize()
 	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
 	tool_box_image = LoadGraph("Resource/images/tool_box.png");
 	int result = LoadDivGraph("Resource/images/car.bmp", 3, 3, 1, 63, 120, enemy_image);
-	/*car_engine_image = LoadGraph("Resource/images/car_engine.png");
-	oil_tank_image = LoadGraph("Resource/images/oil_tank.png");
-	tool_box_image = LoadGraph("Resource/images/tool_box.png");*/
+
+	main_bgm = LoadSoundMem("Resource/sounds/maou_game_vehicle01.mp3");
+	heal_se = LoadSoundMem("Resource/sounds/ゲージ回復2.mp3");
+	damage_se = LoadSoundMem("Resource/sounds/雷魔法4.mp3");
 
 	//エラーチェック
 	if (back_ground == -1)
@@ -64,6 +65,18 @@ void GameMainScene::Initialize()
 	{
 		throw("Resource/images/tool_box.pngがありません\n");
 	}
+	if (main_bgm == -1)
+	{
+		throw("Resource/images/maou_game_vehicle01.mp3がありません\n");
+	}
+	if (heal_se == -1)
+	{
+		throw("Resource/images/ゲージ回復2.pngがありません\n");
+	}
+	if (damage_se == -1)
+	{
+		throw("Resource/images/雷魔法4.mp3がありません\n");
+	}
 	//オブジェクトの生成
 	player = new Player;
 	enemy = new Enemy* [10];
@@ -84,6 +97,9 @@ void GameMainScene::Initialize()
 		enemy[i] = nullptr;
 		item[i] = nullptr;
 	}
+
+	ChangeVolumeSoundMem(255 * 50 / 100, main_bgm);
+	PlaySoundMem(main_bgm, DX_PLAYTYPE_LOOP, TRUE);
 }
 
 //更新処理
@@ -148,6 +164,7 @@ eSceneType GameMainScene::Update()
 			{
 				player->SetActive(false);
 				player->ControlHp(-10.0f);
+				PlaySoundMem(damage_se, DX_PLAYTYPE_BACK, TRUE);
 
 			}
 		}
@@ -174,6 +191,7 @@ eSceneType GameMainScene::Update()
 			{
 				player->SetActive(false);
 				player->ControlHp(-25.0f);
+				PlaySoundMem(damage_se, DX_PLAYTYPE_BACK, TRUE);
 				enemy[i]->Finalize();
 				delete enemy[i];
 				enemy[i] = nullptr;
@@ -204,16 +222,19 @@ eSceneType GameMainScene::Update()
 				{
 					player->ControlFuel(1500);
 					player->ControlHp(10);
+					PlaySoundMem(heal_se, DX_PLAYTYPE_BACK, TRUE);
 				}
 				//体力の回復処理
 				if (item[i]->GetType() == 1 && player->GetFuel() < 20000)
 				{
 					player->ControlHp(15);
+					PlaySoundMem(heal_se, DX_PLAYTYPE_BACK, TRUE);
 				}
 				//燃料の回復処理
 				if (item[i]->GetType() == 2 && player->GetHp() < 100)
 				{
 					player->ControlFuel(2500);
+					PlaySoundMem(heal_se, DX_PLAYTYPE_BACK, TRUE);
 				}
 				item_count[item[i]->GetType()] ++;
 				item[i]->Finalize();
