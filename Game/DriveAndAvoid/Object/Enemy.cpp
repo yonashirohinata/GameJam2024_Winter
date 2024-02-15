@@ -76,10 +76,10 @@ void Enemy::Update(float speed)
 	}
 	
 	//ダメージ範囲内にいるか
-	if (time > 50 && attackflg == false ) {
+	if (time > 20 && attackflg == false ) {
 		box_size = Vector2D(31.0f, 300.0f);	
 	}
-	if (time2 > 50 && attackflg2 == false) {
+	if (time2 > 20 && attackflg2 == false) {
 		box_size = Vector2D(100.0f, 300.0f);
 	}
 	if (time > 100 && attackflg == false || attackflg2 == false) {
@@ -97,10 +97,10 @@ void Enemy::Draw() const
 {
 	//敵画像の描画
 	DrawRotaGraphF(location.x, location.y, 1.5, 0.0, image, TRUE);
-	if (time > 1 && time < 50 && attackflg == false || attackflg2 == false) {
+	if (time > 1 && time < 20 && attackflg == false || attackflg2 == false) {
 		DrawRotaGraphF(location.x, location.y, 1.0, 0.0, Note, TRUE);
 	}
-	if (time > 50 && attackflg == false) {
+	if (time > 20 && attackflg == false) {
 		DrawRotaGraphF(location.x, location.y, 0.5, 0.0, Dangerous, TRUE);
 		DrawRotaGraphF(location.x, location.y + 200, 1.0, 0.0, damage, TRUE);
 	}
@@ -141,7 +141,7 @@ Vector2D Enemy::GetBoxSize() const
 
 
 void Enemy::Timer() {
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) || InputControl::GetButtonDown(XINPUT_BUTTON_X)) {
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) || InputControl::GetButtonDown(XINPUT_BUTTON_X)) {
 		flg = true;
 	}
 }
@@ -154,14 +154,14 @@ void Enemy::Movement()
 	
 
 	//十字移動処理
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_LEFT) && attackflg == true
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_LEFT) && attackflg == true
 															 && attackflg2 == true)
 	{
 			move += Vector2D(-100.0f, 0.0f);
 			cursor--;
 	}
 	
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_DPAD_RIGHT) && attackflg == true
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_DPAD_RIGHT) && attackflg == true
 															  && attackflg2 == true)
 	{
 		cursor++;
@@ -183,27 +183,27 @@ void Enemy::WeakTarget()
 {
 	
 	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 50.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 50.0f)
 	{
 		attackflg = false;
 	}
 	//場所指定（２レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 150.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 150.0f)
 	{
 		attackflg = false;
 	}
 	//場所指定（３レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 250.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 250.0f)
 	{
 		attackflg = false;
 	}
 	//場所指定（４レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 350.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 350.0f)
 	{
 		attackflg = false;
 	}
 	//場所指定（５レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_A) && location.x == 450.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_B) && location.x == 450.0f)
 	{
 		attackflg = false;
 	}
@@ -214,32 +214,32 @@ void Enemy::WeakTarget()
 void Enemy::StrongTarget()
 {
 	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 50.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_X) && location.x == 50.0f)
 	{
 		location1 = NULL;
 		attackflg2 = false;
 	}
 
 	//場所指定（２レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 150.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_X) && location.x == 150.0f)
 	{
 		location2 = NULL;
 		attackflg2 = false;
 	}
 	//場所指定（３レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 250.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_X) && location.x == 250.0f)
 	{
 		location3 = NULL;
 		attackflg2 = false;
 	}
 	//場所指定（４レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 350.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_X) && location.x == 350.0f)
 	{
 		location4 = NULL;
 		attackflg2 = false;
 	}
 	//場所指定（５レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 450.0f)
+	if (InputControl::GetButtonDown2(XINPUT_BUTTON_X) && location.x == 450.0f)
 	{
 		location5 = NULL;
 		attackflg2 = false;
