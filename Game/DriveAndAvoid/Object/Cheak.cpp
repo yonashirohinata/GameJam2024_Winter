@@ -26,12 +26,15 @@ void Cheak::Update(Vector2D vector2D)
 {
 	//ターゲット場所指定(大)
 	StrongTarget();
-	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != vector2D.x)
-	{
-		box_size = Vector2D(31.0f, 300.0f);
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X)) {
 		flg = true;
 	}
+	////場所指定（１レーン）
+	//if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != vector2D.x)
+	//{
+	//	box_size = Vector2D(31.0f, 300.0f);
+	//	flg = true;
+	//}
 	//ダメージが入るまでのタイマー
 	if (flg == true) {
 		time++;
@@ -48,6 +51,11 @@ void Cheak::Update(Vector2D vector2D)
 	if (time > 100 && attackflg == false ) {
 		box_size = Vector2D(31.0f, 60.0f);
 		attackflg = true;
+		location = Vector2D(50.0f, 60.0f);
+		location2 = Vector2D(150.0f, 60.0f);
+		location3 = Vector2D(250.0f, 60.0f);
+		location4 = Vector2D(350.0f, 60.0f);
+		location5 = Vector2D(450.0f, 60.0f);
 	}
 	//ダメージ範囲内にいるか
 	if (time > 150) {
@@ -85,29 +93,34 @@ Vector2D Cheak::GetBoxSize() const
 void Cheak::StrongTarget()
 {
 	//場所指定（１レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 50.0f)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 50.0f)
 	{
+		location = NULL;
 		attackflg = false;
 	}
 	
 	//場所指定（２レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 150.0f)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 150.0f)
 	{
+		location2 = NULL;
 		attackflg = false;
 	}
 	//場所指定（３レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 250.0f)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 250.0f)
 	{
+		location3 = NULL;
 		attackflg = false;
 	}
 	//場所指定（４レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 350.0f)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 350.0f)
 	{
+		location4 = NULL;
 		attackflg = false;
 	}
 	//場所指定（５レーン）
-	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x != 450.0f)
+	if (InputControl::GetButtonDown(XINPUT_BUTTON_X) && location.x == 450.0f)
 	{
+		location5 = NULL;
 		attackflg = false;
 	}
 
