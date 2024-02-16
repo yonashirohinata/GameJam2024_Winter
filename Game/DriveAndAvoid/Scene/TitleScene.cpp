@@ -89,7 +89,7 @@ eSceneType TitleScene::Update()
 	{
 		menu_cursor++;
 		//1番下に到達したら、一番上にする
-		if (menu_cursor > 3)
+		if (menu_cursor > 2)
 		{
 			menu_cursor = 0;
 		}
@@ -102,7 +102,7 @@ eSceneType TitleScene::Update()
 		//1番上に到達したら、一番下にする
 		if (menu_cursor < 0)
 		{
-			menu_cursor = 3;
+			menu_cursor = 2;
 		}
 	}
 
@@ -123,9 +123,6 @@ eSceneType TitleScene::Update()
 			return eSceneType::E_MAIN;
 
 		case 1:
-			return eSceneType::E_RANKING_DISP;
-
-		case 2:
 			return eSceneType::E_HELP;
 
 		default:
@@ -155,23 +152,23 @@ void TitleScene::Draw() const
 	}
 
 	//ヘルプボタン画像の描画
-	if (menu_cursor == 2)
+	if (menu_cursor == 1)
 	{
-		DrawGraph(101, 280, help_select_image, TRUE);
+		DrawGraph(101, 240, help_select_image, TRUE);
 	}
 	else
 	{
-		DrawGraph(101, 280, help_image, TRUE);
+		DrawGraph(101, 240, help_image, TRUE);
 	}
 
 	//エンドボタン画像の描画
-	if (menu_cursor == 3)
+	if (menu_cursor == 2)
 	{
-		DrawGraph(80, 320, end_select_image, TRUE);
+		DrawGraph(80, 280, end_select_image, TRUE);
 	}
 	else
 	{
-		DrawGraph(80, 320, end_image, TRUE);
+		DrawGraph(80, 280, end_image, TRUE);
 	}
 
 	//カーソル画像の描画

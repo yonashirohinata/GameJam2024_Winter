@@ -5,7 +5,7 @@
 
 
 GameMainScene::GameMainScene() : high_score(0), back_ground(NULL), barrier_image(NULL), car_engine_image(NULL), 
-mileage(0), player(nullptr), enemy(nullptr), item(nullptr),cut_in(0)
+mileage(0), player(nullptr), enemy(nullptr), item(nullptr),cut_in(0),speed_up_image(NULL),cut_time(0),speed_direction{}
 
 {
 	for (int i = 0; i < 3; i++)
