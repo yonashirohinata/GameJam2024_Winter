@@ -314,7 +314,8 @@ void GameMainScene::Draw() const
 	//UIの描画
 	DrawBox(500, 0, 640, 480, GetColor(0, 153, 0), TRUE);
 	SetFontSize(16);
-	DrawFormatString(510, 20, GetColor(0, 0, 0), "妨害がHITした数");
+	DrawFormatString(510, 20, GetColor(0, 0, 0), "Player1の目標");
+	DrawFormatString(510, 35, GetColor(0, 0, 0), "スコア:3500");
 	//DrawFormatString(560, 40, GetColor(255, 255, 255), "%08d", 妨害した数の変数);
 	DrawFormatString(510, 80, GetColor(0, 0, 0), "獲得した\nアイテムの数");
 	for (int i = 0; i < 3; i++)

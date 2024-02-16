@@ -243,7 +243,7 @@ void Player::Movement()
 	location += move;
 
 	//âÊñ äOÇ…çsÇ©Ç»Ç¢ÇÊÇ§Ç…êßå¿Ç∑ÇÈ
-	if ((location.x < box_size.x) || (location.x >= 640.0f - 180.0f) || (location.y < box_size.y) || (location.y >= 480.0f - box_size.y))
+	if ((location.x < box_size.x) || (location.x >= 640.0f - 180.0f) || (location.y < box_size.y + 120) || (location.y >= 480.0f - box_size.y))
 	{
 		location -= move;
 	}
